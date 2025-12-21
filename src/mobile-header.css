@@ -1,0 +1,13 @@
+/*
+ * Mobile Header Styles
+ * Most styles are now handled by Tailwind utilities in the HTML.
+ * This file contains only styles that are difficult to express with utilities.
+ */
+
+/* Desktop: ensure search container displays as block for grid layout */
+@media (min-width: 1024px) {
+  #unified-search-container {
+    display: block;
+    height: auto;
+  }
+}

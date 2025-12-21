@@ -1,4 +1,4 @@
-import { isTabletOrAbove, isMobile } from './utils.js';
+import { isTabletOrAbove, isMobile, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
 function initializeMegaMenu(options = {}) {
   const {
@@ -30,26 +30,6 @@ function initializeMegaMenu(options = {}) {
   }
 
   let previouslyFocusedElement = null;
-
-  function lockBodyScroll() {
-    const body = document.body;
-    const count = Number.parseInt(body.dataset.navLockCount || '0');
-    if (count === 0) body.dataset.navPrevOverflow = body.style.overflow || '';
-    body.dataset.navLockCount = String(count + 1);
-    body.style.overflow = 'hidden';
-  }
-
-  function unlockBodyScroll() {
-    const body = document.body;
-    const count = Number.parseInt(body.dataset.navLockCount || '0');
-    const next = Math.max(0, count - 1);
-    body.dataset.navLockCount = String(next);
-
-    if (next === 0) {
-      body.style.overflow = body.dataset.navPrevOverflow || '';
-      delete body.dataset.navPrevOverflow;
-    }
-  }
 
   function applyPosition() {
     const headerHeight = document.querySelector('header')?.offsetHeight || 0;
@@ -240,6 +220,12 @@ function initializeMegaMenu(options = {}) {
   document.addEventListener('navmenu:open', (e) => {
     const type = e?.detail?.type;
     if (type && type !== 'mega' && isOpen()) {
+      closeMenu({ restoreFocus: false });
+    }
+  });
+
+  document.addEventListener('navmenu:requestclose', () => {
+    if (isOpen()) {
       closeMenu({ restoreFocus: false });
     }
   });

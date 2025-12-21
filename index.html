@@ -55,22 +55,22 @@
       </div>
     </div>
 
-    <header class="border-b">
+    <header class="border-b relative">
       <div
-        class="bg-muted py-2.5 text-center text-xs text-balance text-muted-foreground"
+        class="bg-muted py-2.5 text-center text-xs text-balance text-muted-foreground lg:block"
       >
         <a href="#">
           Shopping for
-          <strong class="font-semibold">(1N405157) Rexel UK Ltd</strong>
+          <strong class="font-semibold">(8W888000) WWWW WW Ltd</strong>
           <svg data-lucide="dot" class="inline size-4" aria-hidden="true"></svg>
           Switch Customer&nbsp;<span aria-hidden="true">&rarr;</span>
         </a>
       </div>
 
       <div
-        class="container grid grid-cols-[repeat(2,minmax(10px,1fr))] items-center [grid-template-areas:'logo_action''search_search''menu_menu'] lg:[grid-template-areas:'logo_search_action''menu_menu_menu']"
+        class="bg-indigo-100 container flex items-center justify-between py-4 lg:grid lg:grid-cols-[repeat(2,minmax(10px,1fr))] lg:items-center lg:[grid-template-areas:'logo_search_action''menu_menu_menu']"
       >
-        <div class="py-4 pl-4 text-2xl font-bold [grid-area:logo]">
+        <div class="text-2xl font-bold lg:py-4 pl-4 [grid-area:logo]">
           <svg
             class="h-10 w-32 border border-primary bg-white text-primary"
             preserveAspectRatio="none"
@@ -87,27 +87,47 @@
           </svg>
         </div>
 
-        <div class="px-4 py-4 [grid-area:search] md:py-0">
-          <div class="relative">
-            <input
-              type="text"
-              class="input pr-16"
-              placeholder="Search products"
-            />
-            <div
-              class="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-2 text-muted-foreground [&>svg]:size-4"
-            >
-              <svg data-lucide="search" aria-hidden="true"></svg>
-              <svg data-lucide="mic" aria-hidden="true"></svg>
+        <div
+          id="unified-search-container"
+          class="absolute inset-0 z-30 flex -translate-y-full items-center border-b border-gray-200 bg-white px-4 transition-transform duration-200 ease-in-out data-[open]:translate-y-0 lg:static lg:translate-y-0 lg:border-b-0 lg:bg-transparent lg:px-4 lg:py-0 [grid-area:search]"
+        >
+          <div class="relative flex items-center gap-2">
+            <div class="relative w-full">
+              <input
+                type="text"
+                class="input pr-16 w-full"
+                placeholder="Search products"
+                id="search-input"
+              />
+              <div
+                class="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-2 text-muted-foreground [&>svg]:size-4"
+              >
+                <svg data-lucide="search" aria-hidden="true"></svg>
+                <svg data-lucide="mic" aria-hidden="true"></svg>
+              </div>
             </div>
+            <button
+              type="button"
+              id="mobile-search-close"
+              class="btn-ghost p-2 lg:hidden"
+            >
+              <span class="sr-only">Close</span>
+              <svg data-lucide="x" class="size-6"></svg>
+            </button>
           </div>
         </div>
 
         <div
-          class="flex w-full items-center justify-end gap-1 [grid-area:action]"
+          class="flex items-center justify-end gap-1 [grid-area:action]"
         >
+          <!-- Mobile Search Trigger -->
+          <button id="mobile-search-trigger" class="btn-ghost p-2 lg:hidden">
+            <svg data-lucide="search" class="size-6"></svg>
+            <span class="sr-only">Search</span>
+          </button>
+
           <div class="flex gap-2">
-            <button class="btn-outline">
+            <button class="btn-outline hidden md:flex">
               <svg data-lucide="zap" aria-hidden="true"></svg>
               <span class="hidden md:block">Fast Order</span>
             </button>
@@ -118,11 +138,11 @@
                 aria-haspopup="menu"
                 aria-controls="dropdown-menu-checkboxes-menu"
                 aria-expanded="false"
-                class="btn"
+                class="btn p-2 md:px-4 md:py-2"
               >
                 <svg data-lucide="user" aria-hidden="true"></svg>
                 <span class="hidden md:block">USERNAME</span>
-                <svg data-lucide="chevron-down" aria-hidden="true"></svg>
+                <svg data-lucide="chevron-down" aria-hidden="true" class="hidden md:block"></svg>
               </button>
               <div
                 id="dropdown-menu-checkboxes-popover"
@@ -352,10 +372,15 @@
                 >8</span
               >
             </button>
+            <!-- Mobile Menu Trigger -->
+            <button id="mobile-menu-trigger" class="btn-ghost p-2 lg:hidden">
+              <svg data-lucide="menu" class="size-6"></svg>
+              <span class="sr-only">Menu</span>
+            </button>
           </div>
         </div>
       </div>
-      <nav class="border-t">
+      <nav class="border-t hidden lg:block">
         <div class="container">
           <!-- class="flex w-full max-w-full flex-nowrap overflow-x-auto [&>li]:shrink-0" -->
           <ul
@@ -412,6 +437,9 @@
       >
         <div class="bg-white-500 container h-full overflow-hidden">
           <div class="flex items-center border-b p-4">
+            <button class="back-to-mobile-menu btn-ghost mr-2 p-1 lg:hidden">
+              <svg data-lucide="chevron-left" class="size-6"></svg>
+            </button>
             <svg data-lucide="layout-grid" class="mr-2"></svg>
             <span class="font-medium" id="menu-title">Browse Categories</span>
           </div>
@@ -431,7 +459,12 @@
         hidden
       >
         <div class="flex items-center justify-between border-b p-4">
-          <span class="font-medium" id="mega-menu-title">Megamenu Generic</span>
+          <div class="flex items-center">
+            <button class="back-to-mobile-menu btn-ghost mr-2 p-1 lg:hidden">
+              <svg data-lucide="chevron-left" class="size-6"></svg>
+            </button>
+            <span class="font-medium" id="mega-menu-title">Megamenu Generic</span>
+          </div>
           <button
             id="mega-menu-close-button"
             type="button"
@@ -544,7 +577,43 @@
           </div>
         </div>
       </div>
+      <!-- Mobile Search Overlay Removed -->
     </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="mobile-drawer-overlay" class="fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 data-[open]:opacity-100 data-[open]:pointer-events-auto"></div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed top-0 left-0 z-50 flex h-full w-4/5 max-w-[300px] -translate-x-full flex-col bg-white shadow-lg transition-transform duration-300 ease-in-out data-[open]:translate-x-0">
+      <div class="flex items-center justify-between border-b p-4">
+        <span class="text-lg font-bold">Menu</span>
+        <button id="mobile-drawer-close" class="btn-ghost p-2">
+          <svg data-lucide="x" class="size-6"></svg>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4">
+        <!-- Mobile Menu Items will be injected here -->
+        <ul class="space-y-2" id="mobile-menu-list">
+          <!-- Items will be cloned from main menu or generated -->
+        </ul>
+      </div>
+       <div class="border-t p-4 bg-gray-50">
+        <div class="flex flex-col gap-2">
+           <button class="btn-outline justify-center w-full">
+              <svg data-lucide="zap" aria-hidden="true"></svg>
+              <span>Fast Order</span>
+            </button>
+            <button class="btn-outline justify-center w-full">
+              <svg data-lucide="user" aria-hidden="true"></svg>
+              <span>My Account</span>
+            </button>
+            <button class="btn-outline justify-center w-full">
+              <svg data-lucide="heart" aria-hidden="true"></svg>
+              <span>Wishlist</span>
+            </button>
+        </div>
+      </div>
+    </div>
 
     <main class="bg-red-200">
       <!-- Main content -->
@@ -568,7 +637,7 @@
     </main>
 
     <footer class="bg-gray-200">
-      <div class="container p-4">
+      <div class="air:px-6 container mx-auto my-16 w-full bg-red-300 px-4 lg:px-8 2xl:px-0">
         <p>Footer</p>
       </div>
     </footer>

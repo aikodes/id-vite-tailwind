@@ -2,8 +2,16 @@
 @import "basecoat-css";
 @import "tw-animate-css";
 @import "./menu.css";
+@import "./mobile-header.css";
 /* @import "./toggle-tabs.css"; */
+
+@theme {
+  --breakpoint-air: 73rem;
+  --breakpoint-pro: 85rem;
+}
 
 @utility container {
   margin-inline: auto;
 }
+
+

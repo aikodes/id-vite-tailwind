@@ -1,6 +1,7 @@
-import { initializeMenu } from "./vanilla-menu.js";
+import { initializeMenu } from "./miller-menu.js";
 import { menuData } from "./menu-data.js";
 import { initializeMegaMenu } from "./mega-menu.js";
+import { initializeMobileInteractions } from "./mobile-interactions.js";
 import "./notifications.js";
 import "basecoat-css/all";
 // import "./toggle-tabs.js";
@@ -11,6 +12,8 @@ import {
   createIcons,
   User,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Zap,
   ShoppingCart,
   Heart,
@@ -20,12 +23,15 @@ import {
   LayoutGrid,
   X,
   UserCog,
+  Menu,
 } from "lucide";
 
 createIcons({
   icons: {
     User,
     ChevronDown,
+    ChevronLeft,
+    ChevronRight,
     Zap,
     ShoppingCart,
     Heart,
@@ -35,8 +41,12 @@ createIcons({
     LayoutGrid,
     X,
     UserCog,
+    Menu,
   },
 });
+
+// Make lucide globally available for dynamic icon creation
+window.lucide = { createIcons, ChevronRight };
 
 // Initialize when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -47,4 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeMegaMenu({
     menuKey: "menu3",
   });
+
+  initializeMobileInteractions();
 });

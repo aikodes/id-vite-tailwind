@@ -1,4 +1,4 @@
-import { isTabletOrAbove } from './utils.js';
+import { isTabletOrAbove, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
 /**
  * macOS Style Column View Menu
@@ -27,26 +27,6 @@ function initializeMenu(menuData, options = {}) {
 
   const { onSelect, millerMenuKeys } = options
   let previouslyFocusedElement = null
-
-  function lockBodyScroll() {
-    const body = document.body
-    const count = Number.parseInt(body.dataset.navLockCount || '0')
-    if (count === 0) body.dataset.navPrevOverflow = body.style.overflow || ''
-    body.dataset.navLockCount = String(count + 1)
-    body.style.overflow = 'hidden'
-  }
-
-  function unlockBodyScroll() {
-    const body = document.body
-    const count = Number.parseInt(body.dataset.navLockCount || '0')
-    const next = Math.max(0, count - 1)
-    body.dataset.navLockCount = String(next)
-
-    if (next === 0) {
-      body.style.overflow = body.dataset.navPrevOverflow || ''
-      delete body.dataset.navPrevOverflow
-    }
-  }
 
   const millerKeySet = new Set(
     Array.isArray(millerMenuKeys) ? millerMenuKeys : Object.keys(menuData || {}),
@@ -622,6 +602,12 @@ function initializeMenu(menuData, options = {}) {
   document.addEventListener('navmenu:open', (e) => {
     const type = e?.detail?.type
     if (type && type !== 'miller' && columnMenuContainer.classList.contains('active')) {
+      closeMenu({ restoreFocus: false })
+    }
+  })
+
+  document.addEventListener('navmenu:requestclose', () => {
+    if (columnMenuContainer.classList.contains('active')) {
       closeMenu({ restoreFocus: false })
     }
   })
