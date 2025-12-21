@@ -1,0 +1,137 @@
+/* Transitions */
+#menu-overlay,
+#column-menu-container,
+#mega-menu-container {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+
+#menu-overlay.active,
+#column-menu-container.active,
+#mega-menu-container.active {
+  opacity: 1;
+}
+
+/* Column menu container */
+#column-menu-container {
+}
+
+/* Column styles */
+.column {
+  min-width: 250px;
+  max-width: 250px;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+/* Column title */
+.column-title {
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Column items */
+.column-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.column-item:hover {
+  background-color: #f3f4f6;
+}
+
+.column-item.active {
+  @apply bg-accent text-accent-foreground;
+}
+
+.column-item.current {
+  @apply bg-primary text-primary-foreground;
+}
+
+/* Focus styles */
+.column-item:focus-visible,
+.main-menu-item button:focus-visible,
+#menu-close-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Menu title area */
+#menu-title {
+  flex: 1;
+}
+
+/* Close button */
+#menu-close-button {
+  margin-left: auto;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+}
+
+#menu-close-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* Columns wrapper */
+#columns-wrapper {
+  display: flex;
+  overflow-x: auto;
+  height: calc(100% - 60px);
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8fafc;
+}
+
+#columns-wrapper::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+#columns-wrapper::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+#columns-wrapper::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+/* Active menu item in the main menu */
+.main-menu-item button.active {
+  @apply bg-primary text-primary-foreground;
+}
+
+/* Mobile-friendly styles */
+@media (max-width: 768px) {
+  .column {
+    min-width: 256px; /* Slightly smaller on mobile */
+    max-width: 256px;
+  }
+
+  #column-menu-container {
+    max-width: 100%; /* Full width on mobile */
+    width: calc(100% - 16px); /* Account for margin */
+  }
+
+  /* Larger touch targets */
+  .column-item,
+  .main-menu-item button {
+    padding: 12px 16px;
+  }
+
+  /* Better scrolling on mobile */
+  #columns-wrapper {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .column {
+    scroll-snap-align: start;
+  }
+}

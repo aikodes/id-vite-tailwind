@@ -1,0 +1,25 @@
+toggle-tabs [role="tablist"] {
+	list-style: none;
+	margin: 0 0 2em;
+	padding: 0;
+}
+
+toggle-tabs [role="tablist"] li {
+	display: inline-block;
+}
+
+toggle-tabs [role="tab"] {
+	color: currentColor;
+	margin: 0 0 0.25em;
+	padding:  0.5em 1em;
+	text-decoration: none;
+}
+
+toggle-tabs [role="tab"]:active,
+toggle-tabs [role="tab"]:hover {
+	background-color: #f7f7f7;
+}
+
+toggle-tabs [role="tab"][aria-selected="true"] {
+	background-color: #e5e5e5;
+}

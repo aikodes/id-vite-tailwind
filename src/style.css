@@ -1,2 +1,9 @@
 @import "tailwindcss";
+@import "basecoat-css";
 @import "tw-animate-css";
+@import "./menu.css";
+/* @import "./toggle-tabs.css"; */
+
+@utility container {
+  margin-inline: auto;
+}

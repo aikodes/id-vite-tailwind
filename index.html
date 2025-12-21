@@ -1,45 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/style.css" rel="stylesheet" />
-
-    <title>ID's Vite + TailwindCSS</title>
+    <title>ID's Vite + TW</title>
   </head>
-  <body class="min-h-dvh bg-gray-200">
-    <!-- <div id="app"></div> -->
-    <main class="p-8">
-      <h1 class="text-2xl font-bold">Notification Test</h1>
-      <p class="text-gray-600">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim quaerat
-        rerum ab sit adipisci possimus deserunt nam nisi molestias nesciunt, eum
-        sequi consequuntur, aperiam tenetur quia. Ex debitis quaerat facilis.
-      </p>
-      <button
-        class="mt-4 px-2 py-1 rounded-md bg-green-50"
-        id="showNotification"
-      >
-        Show Notification
-      </button>
-    </main>
-
+  <body
+    class="grid min-h-svh grid-rows-[auto_1fr_auto] overscroll-none bg-background font-sans text-sm"
+  >
     <div
       id="notification"
       role="status"
       aria-live="polite"
       aria-atomic="true"
-      class="fixed inset-x-0 bottom-0 animate-in slide-in-from-bottom hidden"
+      class="fixed inset-x-0 bottom-0 z-50 hidden animate-in slide-in-from-bottom"
     >
       <div class="p-4">
-        <div class="rounded-md bg-white overflow-clip shadow-lg">
-          <div
-            class="h-0.5 w-full bg-black/10 overflow-hidden rounded-full"
-          >
+        <div class="overflow-clip rounded-md bg-white shadow-lg">
+          <div class="h-0.5 w-full overflow-hidden rounded-full bg-black/10">
             <div
               id="progressBar"
-              class="h-full bg-black/20 transition-all ease-linear origin-left rounded-full duration-[var(--notification-duration,6000ms)]"
+              class="h-full origin-left rounded-full bg-black/20 transition-all duration-[var(--notification-duration,6000ms)] ease-linear"
             ></div>
           </div>
           <div class="flex gap-3 p-4">
@@ -50,16 +33,14 @@
               </svg>
             </div>
             <div class="">
-              <p class="text-sm font-medium ">
-                Successfully uploaded
-              </p>
+              <p class="text-sm font-medium">Successfully uploaded</p>
             </div>
             <div class="ml-auto pl-3">
               <div class="-mx-1.5 -my-1.5">
                 <button
                   id="closeNotification"
                   type="button"
-                  class="inline-flex rounded-md bg-black/10 p-1.5  hover:bg-black/20 focus:ring-2 focus:ring-black/20 focus:ring-offset-2 focus:ring-offset-black/10 focus:outline-hidden"
+                  class="inline-flex rounded-md bg-black/10 p-1.5 hover:bg-black/20 focus:ring-2 focus:ring-black/20 focus:ring-offset-2 focus:ring-offset-black/10 focus:outline-hidden"
                 >
                   <span class="sr-only">Dismiss</span>
                   <!-- prettier-ignore -->
@@ -73,6 +54,524 @@
         </div>
       </div>
     </div>
+
+    <header class="border-b">
+      <div
+        class="bg-muted py-2.5 text-center text-xs text-balance text-muted-foreground"
+      >
+        <a href="#">
+          Shopping for
+          <strong class="font-semibold">(1N405157) Rexel UK Ltd</strong>
+          <svg data-lucide="dot" class="inline size-4" aria-hidden="true"></svg>
+          Switch Customer&nbsp;<span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <div
+        class="container grid grid-cols-[repeat(2,minmax(10px,1fr))] items-center [grid-template-areas:'logo_action''search_search''menu_menu'] lg:[grid-template-areas:'logo_search_action''menu_menu_menu']"
+      >
+        <div class="py-4 pl-4 text-2xl font-bold [grid-area:logo]">
+          <svg
+            class="h-10 w-32 border border-primary bg-white text-primary"
+            preserveAspectRatio="none"
+            stroke="currentColor"
+            fill="none"
+            viewBox="0 0 200 200"
+            aria-hidden="true"
+          >
+            <path
+              vector-effect="non-scaling-stroke"
+              stroke-width="1"
+              d="M0 0l200 200M0 200L200 0"
+            />
+          </svg>
+        </div>
+
+        <div class="px-4 py-4 [grid-area:search] md:py-0">
+          <div class="relative">
+            <input
+              type="text"
+              class="input pr-16"
+              placeholder="Search products"
+            />
+            <div
+              class="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-2 text-muted-foreground [&>svg]:size-4"
+            >
+              <svg data-lucide="search" aria-hidden="true"></svg>
+              <svg data-lucide="mic" aria-hidden="true"></svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flex w-full items-center justify-end gap-1 [grid-area:action]"
+        >
+          <div class="flex gap-2">
+            <button class="btn-outline">
+              <svg data-lucide="zap" aria-hidden="true"></svg>
+              <span class="hidden md:block">Fast Order</span>
+            </button>
+            <div id="dropdown-menu-checkboxes" class="dropdown-menu">
+              <button
+                type="button"
+                id="dropdown-menu-checkboxes-trigger"
+                aria-haspopup="menu"
+                aria-controls="dropdown-menu-checkboxes-menu"
+                aria-expanded="false"
+                class="btn"
+              >
+                <svg data-lucide="user" aria-hidden="true"></svg>
+                <span class="hidden md:block">USERNAME</span>
+                <svg data-lucide="chevron-down" aria-hidden="true"></svg>
+              </button>
+              <div
+                id="dropdown-menu-checkboxes-popover"
+                data-align="end"
+                data-popover
+                aria-hidden="true"
+                class="min-w-56"
+              >
+                <div
+                  role="menu"
+                  id="dropdown-menu-checkboxes-menu"
+                  aria-labelledby="dropdown-menu-checkboxes-trigger"
+                >
+                  <div role="group" aria-labelledby="account-options">
+                    <div role="heading" id="account-options">
+                      Account Options
+                    </div>
+                    <div role="menuitem">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      Profile
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⇧⌘P</span
+                      >
+                    </div>
+                    <div role="menuitem">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect width="20" height="14" x="2" y="5" rx="2" />
+                        <line x1="2" x2="22" y1="10" y2="10" />
+                      </svg>
+                      Billing
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⌘B</span
+                      >
+                    </div>
+                    <div role="menuitem">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                        />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      Settings
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⌘S</span
+                      >
+                    </div>
+                  </div>
+                  <hr role="separator" />
+                  <div role="group" aria-labelledby="appearance-options">
+                    <div role="heading" id="appearance-options">Appearance</div>
+                    <div
+                      role="menuitemcheckbox"
+                      aria-checked="true"
+                      class="group"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="invisible group-aria-checked:visible"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      Status Bar
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⇧⌘P</span
+                      >
+                    </div>
+                    <div
+                      role="menuitemcheckbox"
+                      aria-checked="false"
+                      class="group"
+                      aria-disabled="true"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="invisible group-aria-checked:visible"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      Activity Bar
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⌘B</span
+                      >
+                    </div>
+                    <div
+                      role="menuitemcheckbox"
+                      aria-checked="false"
+                      class="group"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="invisible group-aria-checked:visible"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      Panel
+                      <span
+                        class="ml-auto text-xs tracking-widest text-muted-foreground"
+                        >⌘S</span
+                      >
+                    </div>
+                  </div>
+                  <hr role="separator" />
+                  <div role="menuitem">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                      <polyline points="16 17 21 12 16 7" />
+                      <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>
+                    Logout
+                    <span
+                      class="ml-auto text-xs tracking-widest text-muted-foreground"
+                      >⇧⌘P</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              (() => {
+                const dropdownMenu = document.querySelector(
+                  "#dropdown-menu-checkboxes",
+                );
+                const checkboxes = dropdownMenu.querySelectorAll(
+                  'div[role="menuitemcheckbox"]',
+                );
+                checkboxes.forEach((checkbox) => {
+                  checkbox.addEventListener("click", () => {
+                    const isChecked =
+                      checkbox.getAttribute("aria-checked") === "true";
+                    checkbox.setAttribute("aria-checked", !isChecked);
+                  });
+                });
+              })();
+            </script>
+          </div>
+          <div class="flex w-full justify-end">
+            <button class="btn-ghost">
+              <svg
+                data-lucide="heart"
+                role="img"
+                aria-label="Wishlist"
+                title="Wishlist"
+              ></svg>
+            </button>
+            <button class="flex items-center gap-1 bg-purple-100">
+              <svg data-lucide="shopping-cart" aria-hidden="true" class="size-4"></svg>
+              <span
+                class="badge h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                >8</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="border-t">
+        <div class="container">
+          <!-- class="flex w-full max-w-full flex-nowrap overflow-x-auto [&>li]:shrink-0" -->
+          <ul
+            class="grid items-center py-2 md:grid-cols-[repeat(auto-fit,minmax(0,1fr))] **:data-lucide:-rotate-90 md:**:data-lucide:rotate-0"
+            id="main-menu"
+          >
+            <li class="main-menu-item" data-menu="menu1">
+              <button class="btn-lg-ghost w-full">
+                Miller Menu 01 (tree)
+                <svg data-lucide="chevron-down" aria-hidden="true"></svg>
+              </button>
+            </li>
+            <li class="main-menu-item" data-menu="menu2">
+              <button class="btn-lg-ghost w-full">
+                Miller Menu 02 (tree)
+                <svg data-lucide="chevron-down" aria-hidden="true"></svg>
+              </button>
+            </li>
+            <li class="main-menu-item" data-menu="menu3">
+              <button class="btn-lg-ghost w-full">
+                Megamenu Generic 01
+                <svg data-lucide="chevron-down" aria-hidden="true"></svg>
+              </button>
+            </li>
+            <li class="main-menu-item" data-menu="menu4">
+              <a href="https://github.com" class="btn-lg-ghost w-full"
+                >Menu 04</a
+              >
+            </li>
+            <li class="main-menu-item" data-menu="menu5">
+              <a href="https://stackoverflow.com" class="btn-lg-ghost w-full"
+                >Menu 05</a
+              >
+            </li>
+            <li class="main-menu-item" data-menu="menu6">
+              <a href="https://youtube.com" class="btn-lg-ghost w-full"
+                >Menu 06</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Menu overlay -->
+      <div
+        id="menu-overlay"
+        class="fixed inset-0 z-10 hidden bg-black/50"
+      ></div>
+
+      <!-- Column menu container -->
+      <div
+        id="column-menu-container"
+        class="fixed left-1/2 z-20 mx-auto hidden w-full max-w-5xl -translate-x-1/2 transform rounded-lg bg-white shadow-xl"
+      >
+        <div class="bg-white-500 container h-full overflow-hidden">
+          <div class="flex items-center border-b p-4">
+            <svg data-lucide="layout-grid" class="mr-2"></svg>
+            <span class="font-medium" id="menu-title">Browse Categories</span>
+          </div>
+          <div
+            id="columns-wrapper"
+            class="hx-[calc(100%-60px)] flex overflow-x-auto"
+          >
+            <!-- Columns will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Megamenu -->
+      <div
+        id="mega-menu-container"
+        class="fixed z-20 mx-auto flex w-auto transform flex-col overflow-hidden rounded-lg bg-white shadow-xl md:left-1/2 md:w-full md:max-w-5xl md:-translate-x-1/2"
+        hidden
+      >
+        <div class="flex items-center justify-between border-b p-4">
+          <span class="font-medium" id="mega-menu-title">Megamenu Generic</span>
+          <button
+            id="mega-menu-close-button"
+            type="button"
+            class="rounded-full p-1 hover:bg-gray-100"
+            aria-label="Close menu"
+          >
+            <svg data-lucide="x" role="img" aria-label="Close"></svg>
+          </button>
+        </div>
+
+        <div id="mega-menu-content" class="flex-1 overflow-y-auto p-6">
+          <div class="grid gap-8 md:grid-cols-12">
+            <section class="md:col-span-8">
+              <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <ul class="mt-3 space-y-2">
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <ul class="mt-3 space-y-2">
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <ul class="mt-3 space-y-2">
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        >Link item</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <aside class="md:col-span-4">
+              <div class="rounded-lg border bg-gray-50 p-4">
+                <p class="text-sm font-medium text-gray-900">Featured</p>
+                <p class="mt-2 text-sm text-gray-600">
+                  Use this area for a promo card, image, newsletter, or CTA.
+                </p>
+                <a
+                  href="#"
+                  class="mt-4 inline-flex rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
+                >
+                  Call to action
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="bg-red-200">
+      <!-- Main content -->
+      <div class="container bg-teal-100 p-4">
+        <div
+          class="flex flex-col items-center justify-center gap-2 bg-gray-100"
+        >
+          <p class="text-2xl text-gray-500">Main Content area</p>
+          <button
+            id="showNotification"
+            class="rounded-md bg-primary px-4 py-2 text-white"
+          >
+            Show Notification
+          </button>
+        </div>
+      </div>
+      <!-- <div class="container bg-teal-200 p-4">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur impedit a veniam tempora, fugit optio? Eum, praesentium consequuntur. Adipisci doloribus ipsa soluta ad pariatur expedita recusandae blanditiis reprehenderit! Temporibus adipisci optio architecto eum quas veniam blanditiis illo exercitationem vel enim quis corporis quibusdam, eveniet odit laborum qui deserunt iusto, tempore ipsam nobis quaerat, saepe amet? Totam, beatae. Assumenda suscipit tenetur est nihil temporibus, enim ab maxime consequatur iste quos. Molestiae perspiciatis explicabo laboriosam veniam accusantium enim quidem deleniti deserunt ea dolores necessitatibus minus nisi ullam, assumenda et sunt perferendis excepturi, aliquid totam eaque aut, culpa in dicta? A ipsum veniam doloribus nulla, sed corporis dolore, odit itaque facere maiores, eligendi officia! Totam sequi eaque reiciendis voluptatem repellendus dicta quasi saepe sunt aut! Neque nisi, ipsa fugit labore officiis soluta quas, odio facere unde, fuga aut. Corporis quasi velit quos veritatis incidunt laudantium ratione laborum? Harum pariatur cumque exercitationem iusto placeat fuga consequuntur fugiat maxime qui quis sunt numquam iure culpa, rem atque incidunt. Rem vel nulla eveniet. Libero explicabo, odio obcaecati placeat accusantium fugit, officia sit aspernatur ipsam, fugiat praesentium magni tempore dolor possimus voluptatem perspiciatis rem? Eos rem possimus praesentium molestiae ducimus odit accusantium, dicta repellendus ratione dolorem voluptas fugit voluptatum at quod autem magni saepe aut aspernatur. Animi distinctio, totam saepe eveniet sed illum optio reiciendis molestiae officiis quod sunt? Velit deserunt delectus veniam. Repudiandae temporibus illum reprehenderit ratione. Natus mollitia, rem odio impedit nulla officia odit optio at explicabo libero culpa dicta minus porro ipsam eveniet quas corrupti voluptatibus quia debitis itaque! Sunt quaerat, aperiam distinctio, dolor pariatur repudiandae itaque necessitatibus vero, ipsam deleniti qui magnam aspernatur repellat blanditiis autem ab ducimus modi. Accusamus itaque officiis tenetur eligendi nihil totam animi adipisci non odio. Necessitatibus, at asperiores architecto eligendi quisquam distinctio aliquid earum consectetur assumenda, voluptas placeat saepe minus vel laudantium odio porro adipisci debitis blanditiis ipsam. Repellendus saepe deleniti perferendis officia cum eius nemo accusantium consectetur quaerat similique ut quidem aliquam soluta sapiente, hic fugit numquam ab? Vitae aspernatur facilis neque, velit eligendi rem laudantium veniam ab sed ea sint dolore excepturi temporibus, nesciunt voluptate impedit eaque quo. Magni, totam tempora atque voluptates aut quasi possimus saepe consequuntur autem doloremque facere, earum nam alias ullam accusantium quia blanditiis quidem perferendis a est. Libero provident nihil assumenda necessitatibus illo, sequi cupiditate animi repellat et sit. Deserunt rerum tenetur quaerat, aspernatur nulla odio ullam eligendi odit voluptatibus officiis!</p>
+        
+      </div> -->
+    </main>
+
+    <footer class="bg-gray-200">
+      <div class="container p-4">
+        <p>Footer</p>
+      </div>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
   </body>
