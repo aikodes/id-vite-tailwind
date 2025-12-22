@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initializeMobileInteractions();
 
-  window.addEventListener("unload", () => {
+  window.addEventListener("pagehide", () => {
     if (millerMenu?.destroy) {
       millerMenu.destroy();
     }

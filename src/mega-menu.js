@@ -1,6 +1,8 @@
 import { getMenuOverlayController } from './overlay-controller.js';
 import { isTabletOrAbove, isMobile, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
+const MENU_CLOSE_ANIMATION_DURATION = 200;
+
 function initializeMegaMenu(options = {}) {
   const {
     menuKey = 'menu3',
@@ -108,7 +110,6 @@ function initializeMegaMenu(options = {}) {
     container.hidden = false;
     requestAnimationFrame(() => {
       container.classList.add('active');
-      updateAria();
     });
 
     lastIsMobile = isMobile();
@@ -154,7 +155,7 @@ function initializeMegaMenu(options = {}) {
           },
         }),
       );
-    }, 200);
+    }, MENU_CLOSE_ANIMATION_DURATION);
   }
 
   function toggleMenu() {

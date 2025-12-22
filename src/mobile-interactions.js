@@ -9,7 +9,7 @@ export function initializeMobileInteractions() {
   // Prevent multiple initializations
   if (window.mobileInteractionsInitialized) {
     console.warn('Mobile interactions already initialized');
-    return;
+    return () => {}; // Return no-op to maintain consistent return type
   }
   window.mobileInteractionsInitialized = true;
 
@@ -63,12 +63,7 @@ export function initializeMobileInteractions() {
   let searchPreviousFocus = null;
 
   function isSearchOpen() {
-    try {
-      return unifiedSearchContainer && unifiedSearchContainer.hasAttribute("data-open");
-    } catch (error) {
-      console.error('Error checking search state:', error);
-      return false;
-    }
+    return Boolean(unifiedSearchContainer?.hasAttribute("data-open"));
   }
 
   function openSearch() {
@@ -123,12 +118,7 @@ export function initializeMobileInteractions() {
   let isDrawerOpening = false; // Prevent race conditions
 
   function isDrawerOpen() {
-    try {
-      return mobileDrawer && mobileDrawer.hasAttribute("data-open");
-    } catch (error) {
-      console.error('Error checking drawer state:', error);
-      return false;
-    }
+    return Boolean(mobileDrawer?.hasAttribute("data-open"));
   }
 
   function openDrawer() {
@@ -234,16 +224,17 @@ export function initializeMobileInteractions() {
       document.addEventListener("navmenu:close", handleMenuClose, { once: true, signal });
 
       // Fallback timeout with longer delay to match animations
+      // Guard against already-aborted signal to avoid accumulating abort listeners
+      if (signal.aborted) return;
+
       const fallbackTimeout = setTimeout(() => {
         if (!menuClosed && !isDrawerOpen()) {
           openDrawer();
         }
-      }, 300); // Increased timeout for smoother animations
+      }, 150); // Increased timeout for smoother animations
 
-      // Clean up timeout if signal is aborted
-      signal.addEventListener('abort', () => {
-        clearTimeout(fallbackTimeout);
-      });
+      // Clean up timeout if signal is aborted (use once to avoid accumulation)
+      signal.addEventListener('abort', () => clearTimeout(fallbackTimeout), { once: true });
     }, { signal });
   });
 
@@ -287,6 +278,7 @@ export function initializeMobileInteractions() {
               let retryCount = 0;
               const maxRetries = 10;
               const checkDrawerClosed = () => {
+                if (signal.aborted) return; // Stop retries on cleanup
                 if (!isDrawerOpen() || retryCount >= maxRetries) {
                   originalButton.click();
                 } else {
@@ -316,9 +308,4 @@ export function initializeMobileInteractions() {
     window.mobileInteractionsInitialized = false;
     unlockBodyScroll(); // Ensure body scroll is unlocked
   };
-}
-
-// Export cleanup function for external access
-export function getMobileInteractionsCleanup() {
-  return window.mobileInteractionsCleanup;
 }

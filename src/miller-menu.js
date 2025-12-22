@@ -1,6 +1,8 @@
 import { getMenuOverlayController } from './overlay-controller.js';
 import { isTabletOrAbove, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
+const MILLER_MENU_CLOSE_ANIMATION_DURATION = 200;
+
 /**
  * macOS Style Column View Menu
  * Vanilla JS implementation
@@ -334,7 +336,7 @@ function initializeMenu(menuData, options = {}) {
       )
 
       unlockBodyScroll()
-    }, 200)
+    }, MILLER_MENU_CLOSE_ANIMATION_DURATION)
   }
 
   function emitSelection(detail) {

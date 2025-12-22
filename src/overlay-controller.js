@@ -17,11 +17,13 @@ function createOverlayController() {
   function show() {
     overlay.classList.add('active');
     overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
   }
 
   function hide() {
     overlay.classList.remove('active');
     overlay.classList.add('hidden');
+    overlay.setAttribute('aria-hidden', 'true');
   }
 
   return {
