@@ -13,6 +13,9 @@ function initializeMenu(menuData, options = {}) {
   const columnMenuContainer = document.getElementById("column-menu-container")
   const columnsWrapper = document.getElementById("columns-wrapper")
   const menuTitle = document.getElementById("menu-title")
+  const menuCloseButton = document.getElementById("menu-close-button")
+  const focusSentinelStart = document.getElementById('miller-focus-sentinel-start')
+  const focusSentinelEnd = document.getElementById('miller-focus-sentinel-end')
   const megaMenuContainer = document.getElementById("mega-menu-container")
 
   // Check if all required elements exist
@@ -54,13 +57,20 @@ function initializeMenu(menuData, options = {}) {
     }
   }
 
-  function getMenuFocusableElements() {
+  function isVisibleForFocus(el) {
+    if (!(el instanceof HTMLElement)) return false
+    // Consider elements with client rects as visible enough for focus
+    if (el.getClientRects().length === 0) return false
+    return true
+  }
+
+  function getMenuFocusableElements({ includeSentinels = false } = {}) {
     const elements = columnMenuContainer.querySelectorAll(
       'button:not([disabled]), a[href]:not([aria-disabled="true"]), [tabindex]:not([tabindex="-1"])',
     )
     return Array.from(elements).filter((el) => {
-      if (!(el instanceof HTMLElement)) return false
-      if (el.offsetParent === null && el !== document.activeElement) return false
+      if (!isVisibleForFocus(el)) return false
+      if (!includeSentinels && (el === focusSentinelStart || el === focusSentinelEnd)) return false
       return true
     })
   }
@@ -85,14 +95,22 @@ function initializeMenu(menuData, options = {}) {
 
     setRovingTabIndex(column, preferredId)
     const target = column.querySelector('.column-item[tabindex="0"]')
-    if (target instanceof HTMLElement) target.focus()
+    if (target instanceof HTMLElement) {
+      target.focus()
+      target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' })
+    }
 
-    if (column instanceof HTMLElement) {
-      column.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest',
-      })
+    if (column instanceof HTMLElement && columnsWrapper instanceof HTMLElement) {
+      const columnRect = column.getBoundingClientRect()
+      const wrapperRect = columnsWrapper.getBoundingClientRect()
+      const deltaLeft = columnRect.left - wrapperRect.left
+      const deltaRight = columnRect.right - wrapperRect.right
+
+      if (deltaLeft < 0) {
+        columnsWrapper.scrollLeft += deltaLeft
+      } else if (deltaRight > 0) {
+        columnsWrapper.scrollLeft += deltaRight
+      }
     }
   }
 
@@ -180,6 +198,30 @@ function initializeMenu(menuData, options = {}) {
     menuOverlay.dataset.millerMenuBound = 'true'
   }
 
+  if (menuCloseButton && !menuCloseButton.dataset.millerMenuBound) {
+    menuCloseButton.addEventListener('click', () => closeMenu())
+    menuCloseButton.dataset.millerMenuBound = 'true'
+  }
+
+  const bindSentinelFocus = (sentinel, direction) => {
+    if (!sentinel || sentinel.dataset.millerMenuBound) return
+    sentinel.addEventListener('focus', () => {
+      const focusables = getMenuFocusableElements()
+      if (focusables.length === 0) return
+      const target =
+        direction === 'start'
+          ? focusables[focusables.length - 1]
+          : focusables[0]
+      requestAnimationFrame(() => {
+        if (target instanceof HTMLElement) target.focus()
+      })
+    })
+    sentinel.dataset.millerMenuBound = 'true'
+  }
+
+  bindSentinelFocus(focusSentinelStart, 'start')
+  bindSentinelFocus(focusSentinelEnd, 'end')
+
   // Function to open the menu
   function openMenu(menuObj) {
     if (!menuObj) {
@@ -198,26 +240,6 @@ function initializeMenu(menuData, options = {}) {
 
     // Set menu title
     menuTitle.textContent = menuObj.title || "Menu"
-    // Add close button if it doesn't exist
-    if (!document.getElementById("menu-close-button")) {
-      const closeButton = document.createElement("button")
-      closeButton.id = "menu-close-button"
-      closeButton.className = "ml-auto p-1 hover:bg-gray-100 rounded-full"
-      closeButton.setAttribute('aria-label', 'Close menu')
-      closeButton.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      `
-      closeButton.addEventListener("click", closeMenu)
-
-      // Find the title container and append the close button
-      const titleContainer = menuTitle.parentElement
-      if (titleContainer) {
-        titleContainer.appendChild(closeButton)
-      }
-    }
 
     // Clear existing columns
     columnsWrapper.innerHTML = ""
@@ -250,7 +272,13 @@ function initializeMenu(menuData, options = {}) {
     lockBodyScroll()
 
     requestAnimationFrame(() => {
-      focusFirstMenuItem()
+      // Try focusing the first menu item; fallback to close button
+      const firstItem = columnsWrapper.querySelector('.column-item')
+      if (firstItem instanceof HTMLElement) {
+        focusFirstMenuItem()
+      } else if (menuCloseButton instanceof HTMLElement) {
+        menuCloseButton.focus()
+      }
     })
   }
 
@@ -517,6 +545,32 @@ function initializeMenu(menuData, options = {}) {
   }
 
   // Handle keyboard events
+  function trapFocusWithinMenu(e) {
+    const focusable = getMenuFocusableElements()
+    if (focusable.length === 0) return
+
+    const currentIndex = focusable.indexOf(document.activeElement)
+    const nextIndex = e.shiftKey
+      ? (currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1)
+      : (currentIndex === focusable.length - 1 ? 0 : currentIndex + 1)
+
+    e.preventDefault()
+    const next = focusable[nextIndex]
+    if (next instanceof HTMLElement) {
+      next.focus()
+      if (next.classList.contains('column-item')) {
+        const parentColumn = next.closest('.column')
+        if (parentColumn && parentColumn.dataset.level) {
+          const level = Number.parseInt(parentColumn.dataset.level)
+          focusColumnItem(level, next.dataset.id)
+        }
+      } else if (next === menuCloseButton) {
+        // Ensure wrapper scrolls back to start when wrapping to close then first item
+        columnsWrapper.scrollLeft = 0
+      }
+    }
+  }
+
   document.addEventListener('keydown', (e) => {
     if (!columnMenuContainer.classList.contains('active')) return
 
@@ -526,16 +580,7 @@ function initializeMenu(menuData, options = {}) {
     }
 
     if (e.key === 'Tab') {
-      const focusable = getMenuFocusableElements()
-      if (focusable.length === 0) return
-
-      const currentIndex = focusable.indexOf(document.activeElement)
-      const nextIndex = e.shiftKey
-        ? (currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1)
-        : (currentIndex === focusable.length - 1 ? 0 : currentIndex + 1)
-
-      e.preventDefault()
-      focusable[nextIndex].focus()
+      trapFocusWithinMenu(e)
       return
     }
 

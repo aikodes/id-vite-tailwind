@@ -442,13 +442,35 @@
             </button>
             <svg data-lucide="layout-grid" class="mr-2"></svg>
             <span class="font-medium" id="menu-title">Browse Categories</span>
+            <button
+              id="menu-close-button"
+              type="button"
+              class="ml-auto btn-lg-icon-ghost"
+              aria-label="Close menu"
+            >
+              <svg data-lucide="x"></svg>
+            </button>
           </div>
+          <button
+            type="button"
+            class="sr-only"
+            aria-hidden="true"
+            tabindex="0"
+            id="miller-focus-sentinel-start"
+          >Start of menu</button>
           <div
             id="columns-wrapper"
             class="hx-[calc(100%-60px)] flex overflow-x-auto"
           >
             <!-- Columns will be dynamically inserted here -->
           </div>
+          <button
+            type="button"
+            class="sr-only"
+            aria-hidden="true"
+            tabindex="0"
+            id="miller-focus-sentinel-end"
+          >End of menu</button>
         </div>
       </div>
 
