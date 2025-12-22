@@ -367,12 +367,16 @@ function initializeMenu(menuData, options = {}) {
     // Create column element
     const column = document.createElement("div")
     column.className = "column min-w-[250px] max-w-[250px] border-r border-gray-200 overflow-y-auto"
+    column.setAttribute('role', 'listbox')
+    column.setAttribute('aria-label', columnData.title || 'Column')
     column.dataset.level = level
 
     // Add column title
     const title = document.createElement("div")
     title.className = "font-medium p-3 border-b border-gray-200"
     title.textContent = columnData.title || "Column"
+    title.setAttribute('role', 'heading')
+    title.setAttribute('aria-level', `${Math.min(6, level + 2)}`)
     column.appendChild(title)
 
     // Add column items
@@ -395,6 +399,8 @@ function initializeMenu(menuData, options = {}) {
         "column-item flex justify-between items-center p-3 cursor-pointer transition-colors hover:bg-gray-100"
       itemEl.dataset.id = item.id
       itemEl.dataset.hasChildren = item.hasChildren ? 'true' : 'false'
+      itemEl.setAttribute('role', 'option')
+      itemEl.setAttribute('aria-selected', 'false')
 
       if (item.hasChildren) {
         itemEl.setAttribute('aria-haspopup', 'true')
@@ -404,6 +410,7 @@ function initializeMenu(menuData, options = {}) {
       // Check if this item is in the active path
       if (activePath[level] === item.id) {
         itemEl.classList.add('active')
+        itemEl.setAttribute('aria-selected', 'true')
         if (level === activePath.length - 1) {
           itemEl.classList.add('current')
           itemEl.setAttribute('aria-current', 'true')
@@ -475,6 +482,7 @@ function initializeMenu(menuData, options = {}) {
       const items = columns[level].querySelectorAll("[data-id]")
       items.forEach((i) => {
         i.classList.remove('active', 'current')
+        i.setAttribute('aria-selected', 'false')
         i.removeAttribute('aria-current')
         if (i.getAttribute('data-has-children') === 'true') {
           i.setAttribute('aria-expanded', 'false')
@@ -486,6 +494,7 @@ function initializeMenu(menuData, options = {}) {
       if (clickedItem) {
         clickedItem.classList.add('active', 'current')
         clickedItem.setAttribute('aria-current', 'true')
+        clickedItem.setAttribute('aria-selected', 'true')
         if (clickedItem.getAttribute('data-has-children') === 'true') {
           clickedItem.setAttribute('aria-expanded', 'true')
         }

@@ -55,7 +55,14 @@
       </div>
     </div>
 
-    <header class="border-b relative">
+    <header class="relative border-b">
+      <div
+        class="p-2 text-center empty:hidden"
+        style="background-color: #008f64; color: #ffffff"
+      >
+        <p>Free shipping during December</p>
+      </div>
+
       <div
         class="bg-muted py-2.5 text-center text-xs text-balance text-muted-foreground lg:block"
       >
@@ -68,9 +75,9 @@
       </div>
 
       <div
-        class="bg-indigo-100 container flex items-center justify-between py-4 lg:grid lg:grid-cols-[repeat(2,minmax(10px,1fr))] lg:items-center lg:[grid-template-areas:'logo_search_action''menu_menu_menu']"
+        class="container flex items-center justify-between bg-indigo-100 py-4 lg:grid lg:grid-cols-[repeat(2,minmax(10px,1fr))] lg:items-center lg:[grid-template-areas:'logo_search_action''menu_menu_menu']"
       >
-        <div class="text-2xl font-bold lg:py-4 pl-4 [grid-area:logo]">
+        <div class="pl-4 text-2xl font-bold [grid-area:logo] lg:py-4">
           <svg
             class="h-10 w-32 border border-primary bg-white text-primary"
             preserveAspectRatio="none"
@@ -89,13 +96,13 @@
 
         <div
           id="unified-search-container"
-          class="absolute inset-0 z-30 flex -translate-y-full items-center border-b border-gray-200 bg-white px-4 transition-transform duration-200 ease-in-out data-[open]:translate-y-0 lg:static lg:translate-y-0 lg:border-b-0 lg:bg-transparent lg:px-4 lg:py-0 [grid-area:search]"
+          class="absolute inset-0 z-30 flex -translate-y-full items-center border-b border-gray-200 bg-white px-4 transition-transform duration-200 ease-in-out [grid-area:search] data-[open]:translate-y-0 lg:static lg:translate-y-0 lg:border-b-0 lg:bg-transparent lg:px-4 lg:py-0"
         >
           <div class="relative flex items-center gap-2">
             <div class="relative w-full">
               <input
                 type="text"
-                class="input pr-16 w-full"
+                class="input w-full pr-16"
                 placeholder="Search products"
                 id="search-input"
               />
@@ -117,9 +124,7 @@
           </div>
         </div>
 
-        <div
-          class="flex items-center justify-end gap-1 [grid-area:action]"
-        >
+        <div class="flex items-center justify-end gap-1 [grid-area:action]">
           <!-- Mobile Search Trigger -->
           <button id="mobile-search-trigger" class="btn-ghost p-2 lg:hidden">
             <svg data-lucide="search" class="size-6"></svg>
@@ -142,7 +147,11 @@
               >
                 <svg data-lucide="user" aria-hidden="true"></svg>
                 <span class="hidden md:block">USERNAME</span>
-                <svg data-lucide="chevron-down" aria-hidden="true" class="hidden md:block"></svg>
+                <svg
+                  data-lucide="chevron-down"
+                  aria-hidden="true"
+                  class="hidden md:block"
+                ></svg>
               </button>
               <div
                 id="dropdown-menu-checkboxes-popover"
@@ -366,25 +375,34 @@
               ></svg>
             </button>
             <button class="flex items-center gap-1 bg-purple-100">
-              <svg data-lucide="shopping-cart" aria-hidden="true" class="size-4"></svg>
+              <svg
+                data-lucide="shopping-cart"
+                aria-hidden="true"
+                class="size-4"
+              ></svg>
               <span
                 class="badge h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
                 >8</span
               >
             </button>
             <!-- Mobile Menu Trigger -->
-            <button id="mobile-menu-trigger" class="btn-ghost p-2 lg:hidden">
-              <svg data-lucide="menu" class="size-6"></svg>
+            <button
+              id="mobile-menu-trigger"
+              class="btn-lg-icon-ghost p-2 lg:hidden"
+            >
+              <svg data-lucide="menu"></svg>
               <span class="sr-only">Menu</span>
             </button>
           </div>
         </div>
       </div>
-      <nav class="border-t hidden lg:block">
+      <nav class="hidden border-t lg:block">
         <div class="container">
           <!-- class="flex w-full max-w-full flex-nowrap overflow-x-auto [&>li]:shrink-0" -->
+          <!-- class="grid items-center py-2 **:data-lucide:-rotate-90 md:grid-cols-[repeat(auto-fit,minmax(0,1fr))] md:**:data-lucide:rotate-0" -->
           <ul
-            class="grid items-center py-2 md:grid-cols-[repeat(auto-fit,minmax(0,1fr))] **:data-lucide:-rotate-90 md:**:data-lucide:rotate-0"
+            class="grid items-center py-2 **:data-lucide:-rotate-90 md:grid-flow-col md:auto-cols-max md:justify-center md:gap-2 md:**:data-lucide:rotate-0"
+
             id="main-menu"
           >
             <li class="main-menu-item" data-menu="menu1">
@@ -445,7 +463,7 @@
             <button
               id="menu-close-button"
               type="button"
-              class="ml-auto btn-lg-icon-ghost"
+              class="btn-lg-icon-ghost ml-auto"
               aria-label="Close menu"
             >
               <svg data-lucide="x"></svg>
@@ -457,7 +475,9 @@
             aria-hidden="true"
             tabindex="0"
             id="miller-focus-sentinel-start"
-          >Start of menu</button>
+          >
+            Start of menu
+          </button>
           <div
             id="columns-wrapper"
             class="hx-[calc(100%-60px)] flex overflow-x-auto"
@@ -470,7 +490,9 @@
             aria-hidden="true"
             tabindex="0"
             id="miller-focus-sentinel-end"
-          >End of menu</button>
+          >
+            End of menu
+          </button>
         </div>
       </div>
 
@@ -485,7 +507,9 @@
             <button class="back-to-mobile-menu btn-ghost mr-2 p-1 lg:hidden">
               <svg data-lucide="chevron-left" class="size-6"></svg>
             </button>
-            <span class="font-medium" id="mega-menu-title">Megamenu Generic</span>
+            <span class="font-medium" id="mega-menu-title"
+              >Megamenu Generic</span
+            >
           </div>
           <button
             id="mega-menu-close-button"
@@ -603,10 +627,16 @@
     </header>
 
     <!-- Mobile Drawer Overlay -->
-    <div id="mobile-drawer-overlay" class="fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 data-[open]:opacity-100 data-[open]:pointer-events-auto"></div>
+    <div
+      id="mobile-drawer-overlay"
+      class="pointer-events-none fixed inset-0 z-40 bg-black/50 opacity-0 transition-opacity duration-300 data-[open]:pointer-events-auto data-[open]:opacity-100"
+    ></div>
 
     <!-- Mobile Drawer -->
-    <div id="mobile-drawer" class="fixed top-0 left-0 z-50 flex h-full w-4/5 max-w-[300px] -translate-x-full flex-col bg-white shadow-lg transition-transform duration-300 ease-in-out data-[open]:translate-x-0">
+    <div
+      id="mobile-drawer"
+      class="fixed top-0 left-0 z-50 flex h-full w-4/5 max-w-[300px] -translate-x-full flex-col bg-white shadow-lg transition-transform duration-300 ease-in-out data-[open]:translate-x-0"
+    >
       <div class="flex items-center justify-between border-b p-4">
         <span class="text-lg font-bold">Menu</span>
         <button id="mobile-drawer-close" class="btn-ghost p-2">
@@ -619,25 +649,25 @@
           <!-- Items will be cloned from main menu or generated -->
         </ul>
       </div>
-       <div class="border-t p-4 bg-gray-50">
+      <div class="border-t bg-gray-50 p-4">
         <div class="flex flex-col gap-2">
-           <button class="btn-outline justify-center w-full">
-              <svg data-lucide="zap" aria-hidden="true"></svg>
-              <span>Fast Order</span>
-            </button>
-            <button class="btn-outline justify-center w-full">
-              <svg data-lucide="user" aria-hidden="true"></svg>
-              <span>My Account</span>
-            </button>
-            <button class="btn-outline justify-center w-full">
-              <svg data-lucide="heart" aria-hidden="true"></svg>
-              <span>Wishlist</span>
-            </button>
+          <button class="btn-outline w-full justify-center">
+            <svg data-lucide="zap" aria-hidden="true"></svg>
+            <span>Fast Order</span>
+          </button>
+          <button class="btn-outline w-full justify-center">
+            <svg data-lucide="user" aria-hidden="true"></svg>
+            <span>My Account</span>
+          </button>
+          <button class="btn-outline w-full justify-center">
+            <svg data-lucide="heart" aria-hidden="true"></svg>
+            <span>Wishlist</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <main class="bg-red-200">
+    <main class="bg-yellow-100">
       <!-- Main content -->
       <div class="container bg-teal-100 p-4">
         <div
@@ -659,7 +689,9 @@
     </main>
 
     <footer class="bg-gray-200">
-      <div class="air:px-6 container mx-auto my-16 w-full bg-red-300 px-4 lg:px-8 2xl:px-0">
+      <div
+        class="container mx-auto my-16 w-full bg-red-300 px-4 lg:px-8 air:px-6 2xl:px-0"
+      >
         <p>Footer</p>
       </div>
     </footer>
