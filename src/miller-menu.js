@@ -17,6 +17,8 @@ function initializeMenu(menuData, options = {}) {
   const focusSentinelStart = document.getElementById('miller-focus-sentinel-start')
   const focusSentinelEnd = document.getElementById('miller-focus-sentinel-end')
   const megaMenuContainer = document.getElementById("mega-menu-container")
+  const listeners = new AbortController()
+  const { signal } = listeners
 
   // Check if all required elements exist
   if (!mainMenu || !menuOverlay || !columnMenuContainer || !columnsWrapper || !menuTitle) {
@@ -134,7 +136,8 @@ function initializeMenu(menuData, options = {}) {
 
   // Initialize main menu event listeners
   const mainMenuItems = mainMenu.querySelectorAll(".main-menu-item")
-  mainMenuItems.forEach((item) => {
+  const mainMenuClickHandlers = new Map()
+  const bindMainMenuItem = (item) => {
     const button = item.querySelector("button")
     const menuKey = item.dataset.menu
 
@@ -147,18 +150,14 @@ function initializeMenu(menuData, options = {}) {
       if (link) {
         link.addEventListener('click', () => {
           if (columnMenuContainer.classList.contains('active')) closeMenu()
-        })
+        }, { signal })
       }
       return
     }
 
     if (!button) return
 
-    // Remove any existing event listeners to prevent duplicates
-    const newButton = button.cloneNode(true)
-    button.parentNode.replaceChild(newButton, button)
-
-    newButton.addEventListener("click", () => {
+    const handler = () => {
       previouslyFocusedElement = document.activeElement
 
       // If clicking the same menu item that's already active, close the menu
@@ -178,7 +177,7 @@ function initializeMenu(menuData, options = {}) {
         if (!isMillerMenuKey(key)) return
         if (btn) btn.classList.remove("active")
       })
-      newButton.classList.add("active")
+      button.classList.add("active")
 
       // Open menu with the selected main menu data
       if (menuData[menuKey]) {
@@ -186,25 +185,25 @@ function initializeMenu(menuData, options = {}) {
       } else {
         console.error(`Menu data for ${menuKey} not found`)
       }
-    })
-  })
+    }
 
-  // Remove any existing event listeners to prevent duplicates
-  if (!menuOverlay.dataset.millerMenuBound) {
-    // Close menu when clicking on overlay
-    menuOverlay.addEventListener("click", () => {
-      if (columnMenuContainer.classList.contains('active')) closeMenu()
-    })
-    menuOverlay.dataset.millerMenuBound = 'true'
+    button.addEventListener("click", handler, { signal })
+    mainMenuClickHandlers.set(button, handler)
   }
 
-  if (menuCloseButton && !menuCloseButton.dataset.millerMenuBound) {
-    menuCloseButton.addEventListener('click', () => closeMenu())
-    menuCloseButton.dataset.millerMenuBound = 'true'
+  mainMenuItems.forEach(bindMainMenuItem)
+
+  // Remove any existing event listeners to prevent duplicates
+  menuOverlay.addEventListener("click", () => {
+    if (columnMenuContainer.classList.contains('active')) closeMenu()
+  }, { signal })
+
+  if (menuCloseButton) {
+    menuCloseButton.addEventListener('click', () => closeMenu(), { signal })
   }
 
   const bindSentinelFocus = (sentinel, direction) => {
-    if (!sentinel || sentinel.dataset.millerMenuBound) return
+    if (!sentinel) return
     sentinel.addEventListener('focus', () => {
       const focusables = getMenuFocusableElements()
       if (focusables.length === 0) return
@@ -215,8 +214,7 @@ function initializeMenu(menuData, options = {}) {
       requestAnimationFrame(() => {
         if (target instanceof HTMLElement) target.focus()
       })
-    })
-    sentinel.dataset.millerMenuBound = 'true'
+    }, { signal })
   }
 
   bindSentinelFocus(focusSentinelStart, 'start')
@@ -366,7 +364,8 @@ function initializeMenu(menuData, options = {}) {
 
     // Create column element
     const column = document.createElement("div")
-    column.className = "column min-w-[250px] max-w-[250px] border-r border-gray-200 overflow-y-auto"
+    column.className =
+      "column w-[clamp(200px,25vw,280px)] min-w-[200px] max-w-[320px] border-r border-gray-200 overflow-y-auto"
     column.setAttribute('role', 'listbox')
     column.setAttribute('aria-label', columnData.title || 'Column')
     column.dataset.level = level
@@ -436,8 +435,10 @@ function initializeMenu(menuData, options = {}) {
 
       // Add click event
       itemEl.addEventListener('click', (e) => {
-        if (isLink) e.preventDefault()
-        handleItemClick(item, level)
+        const proceed = handleItemClick(item, level, { isLink })
+        if (isLink && proceed === false) {
+          e.preventDefault()
+        }
       })
 
       column.appendChild(itemEl)
@@ -455,7 +456,7 @@ function initializeMenu(menuData, options = {}) {
   }
 
   // Function to handle item click
-  function handleItemClick(item, level) {
+  function handleItemClick(item, level, { isLink = false } = {}) {
     if (!item) return
 
     // Update active path
@@ -512,11 +513,12 @@ function initializeMenu(menuData, options = {}) {
         item,
       })
 
-      if (!shouldProceed) return
+      if (!shouldProceed) return false
 
       closeMenu()
 
-      if (item.href) {
+      // For link items, allow the native navigation to proceed unless we canceled.
+      if (!isLink && item.href) {
         if (item.target === "_blank") {
           const newWindow = window.open(item.href, "_blank", "noopener,noreferrer")
           if (newWindow) newWindow.opener = null
@@ -525,7 +527,7 @@ function initializeMenu(menuData, options = {}) {
         }
       }
 
-      return
+      return true
     }
 
     // Find child data
@@ -551,6 +553,8 @@ function initializeMenu(menuData, options = {}) {
         })
       }
     }
+
+    return true
   }
 
   // Handle keyboard events
@@ -580,7 +584,7 @@ function initializeMenu(menuData, options = {}) {
     }
   }
 
-  document.addEventListener('keydown', (e) => {
+  const onKeyDown = (e) => {
     if (!columnMenuContainer.classList.contains('active')) return
 
     if (e.key === 'Escape') {
@@ -624,14 +628,18 @@ function initializeMenu(menuData, options = {}) {
       return
     }
 
-    if (e.key === 'ArrowRight') {
+    const dir = document.dir === 'rtl' ? 'rtl' : 'ltr'
+    const forwardKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight'
+    const backKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft'
+
+    if (e.key === forwardKey) {
       if (activeItem.dataset.hasChildren !== 'true') return
       e.preventDefault()
       activeItem.click()
       return
     }
 
-    if (e.key === 'ArrowLeft') {
+    if (e.key === backKey) {
       e.preventDefault()
       const previousLevel = Math.max(0, level - 1)
       const preferredId = activePath[previousLevel]
@@ -644,30 +652,39 @@ function initializeMenu(menuData, options = {}) {
       activeItem.click()
       return
     }
-  })
+  }
+
+  document.addEventListener('keydown', onKeyDown, { signal })
 
   // Handle window resize to adjust menu container position
-  window.addEventListener("resize", () => {
+  const onResize = () => {
     if (columnMenuContainer.classList.contains("active")) {
       applyMenuContainerPosition()
     }
-  })
+  }
+  window.addEventListener("resize", onResize, { signal })
 
   document.addEventListener('navmenu:open', (e) => {
     const type = e?.detail?.type
     if (type && type !== 'miller' && columnMenuContainer.classList.contains('active')) {
       closeMenu({ restoreFocus: false })
     }
-  })
+  }, { signal })
 
   document.addEventListener('navmenu:requestclose', () => {
     if (columnMenuContainer.classList.contains('active')) {
       closeMenu({ restoreFocus: false })
     }
-  })
+  }, { signal })
 
   // Initial calculation of header and footer heights
   applyMenuContainerPosition()
+
+  function destroy() {
+    listeners.abort()
+  }
+
+  return { destroy }
 }
 
 // Export the function for use in other files
