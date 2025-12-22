@@ -96,7 +96,7 @@
 
         <div
           id="unified-search-container"
-          class="absolute inset-0 z-30 flex -translate-y-full items-center border-b border-gray-200 bg-white px-4 transition-transform duration-200 ease-in-out [grid-area:search] data-[open]:translate-y-0 lg:static lg:translate-y-0 lg:border-b-0 lg:bg-transparent lg:px-4 lg:py-0"
+          class="absolute inset-0 z-30 flex -translate-y-full items-center border-b bg-white px-4 transition-transform duration-200 ease-in-out [grid-area:search] data-[open]:translate-y-0 lg:static lg:translate-y-0 lg:border-b-0 lg:bg-transparent lg:px-4 lg:py-0"
         >
           <div class="relative flex items-center gap-2">
             <div class="relative w-full">
@@ -126,8 +126,11 @@
 
         <div class="flex items-center justify-end gap-1 [grid-area:action]">
           <!-- Mobile Search Trigger -->
-          <button id="mobile-search-trigger" class="btn-ghost p-2 lg:hidden">
-            <svg data-lucide="search" class="size-6"></svg>
+          <button
+            id="mobile-search-trigger"
+            class="btn-lg-icon-ghost lg:hidden"
+          >
+            <svg data-lucide="search"></svg>
             <span class="sr-only">Search</span>
           </button>
 
@@ -401,8 +404,7 @@
           <!-- class="flex w-full max-w-full flex-nowrap overflow-x-auto [&>li]:shrink-0" -->
           <!-- class="grid items-center py-2 **:data-lucide:-rotate-90 md:grid-cols-[repeat(auto-fit,minmax(0,1fr))] md:**:data-lucide:rotate-0" -->
           <ul
-            class="grid items-center py-2 **:data-lucide:-rotate-90 md:grid-flow-col md:auto-cols-max md:justify-center md:gap-2 md:**:data-lucide:rotate-0"
-
+            class="grid items-center py-2 **:data-lucide:-rotate-90 md:auto-cols-max md:grid-flow-col md:justify-center md:gap-2 md:**:data-lucide:rotate-0"
             id="main-menu"
           >
             <li class="main-menu-item" data-menu="menu1">

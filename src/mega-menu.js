@@ -1,3 +1,4 @@
+import { getMenuOverlayController } from './overlay-controller.js';
 import { isTabletOrAbove, isMobile, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
 function initializeMegaMenu(options = {}) {
@@ -29,7 +30,11 @@ function initializeMegaMenu(options = {}) {
     return;
   }
 
+  const listeners = new AbortController();
+  const { signal } = listeners;
+
   let previouslyFocusedElement = null;
+  let lastIsMobile = isMobile();
 
   function applyPosition() {
     const headerHeight = document.querySelector('header')?.offsetHeight || 0;
@@ -74,6 +79,17 @@ function initializeMegaMenu(options = {}) {
     return container.classList.contains('active');
   }
 
+  function setRoleAndModal(isMobileView) {
+    if (isMobileView) {
+      container.setAttribute('role', 'dialog');
+      container.setAttribute('aria-modal', 'true');
+    } else {
+      container.setAttribute('role', 'region');
+      container.removeAttribute('aria-modal');
+    }
+    container.setAttribute('aria-labelledby', titleId);
+  }
+
   function openMenu({ focus = false } = {}) {
     previouslyFocusedElement = document.activeElement;
 
@@ -86,8 +102,8 @@ function initializeMegaMenu(options = {}) {
       }),
     );
 
-    overlay.classList.add('active');
-    overlay.classList.remove('hidden');
+    const overlayCtrl = getMenuOverlayController();
+    overlayCtrl.acquire();
 
     container.hidden = false;
     requestAnimationFrame(() => {
@@ -95,19 +111,13 @@ function initializeMegaMenu(options = {}) {
       updateAria();
     });
 
-    if (isMobile()) {
-      container.setAttribute('role', 'dialog');
-      container.setAttribute('aria-modal', 'true');
-    } else {
-      container.setAttribute('role', 'region');
-      container.removeAttribute('aria-modal');
-    }
-    container.setAttribute('aria-labelledby', titleId);
+    lastIsMobile = isMobile();
+    setRoleAndModal(lastIsMobile);
 
     applyPosition();
     updateAria();
 
-    if (isMobile()) lockBodyScroll();
+    if (lastIsMobile) lockBodyScroll();
 
     if (focus) {
       requestAnimationFrame(() => {
@@ -123,15 +133,11 @@ function initializeMegaMenu(options = {}) {
 
     updateAria();
 
+    const overlayCtrl = getMenuOverlayController();
+
     window.setTimeout(() => {
       container.hidden = true;
-
-      const miller = document.getElementById('column-menu-container');
-      const shouldHideOverlay = !(miller && miller.classList.contains('active'));
-
-      // Only remove the overlay active state if no other menu is using it.
-      if (shouldHideOverlay) overlay.classList.remove('active');
-      if (shouldHideOverlay) overlay.classList.add('hidden');
+      overlayCtrl.release();
 
       if (isMobile()) unlockBodyScroll();
 
@@ -160,75 +166,114 @@ function initializeMegaMenu(options = {}) {
     openMenu({ focus: isMobile() });
   }
 
-  trigger.addEventListener('click', () => {
-    toggleMenu();
-  });
+  trigger.addEventListener(
+    'click',
+    () => {
+      toggleMenu();
+    },
+    { signal },
+  );
 
-  closeButton.addEventListener('click', () => {
-    closeMenu();
-  });
-
-  overlay.addEventListener('click', () => {
-    if (!isOpen()) return;
-    closeMenu();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (!isOpen()) return;
-
-    if (e.key === 'Escape') {
+  closeButton.addEventListener(
+    'click',
+    () => {
       closeMenu();
-      return;
-    }
+    },
+    { signal },
+  );
 
-    if (e.key === 'Tab' && isMobile()) {
-      const focusable = getFocusableElements();
-      if (focusable.length === 0) return;
+  overlay.addEventListener(
+    'click',
+    () => {
+      if (!isOpen()) return;
+      closeMenu();
+    },
+    { signal },
+  );
 
-      const currentIndex = focusable.indexOf(document.activeElement);
-      const nextIndex = e.shiftKey
-        ? currentIndex <= 0
-          ? focusable.length - 1
-          : currentIndex - 1
-        : currentIndex === focusable.length - 1
-          ? 0
-          : currentIndex + 1;
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (!isOpen()) return;
 
-      e.preventDefault();
-      focusable[nextIndex].focus();
-    }
-  });
+      if (e.key === 'Escape') {
+        closeMenu();
+        return;
+      }
 
-  document.addEventListener('focusin', (e) => {
-    if (!isOpen()) return;
-    if (!isTabletOrAbove()) return;
+      if (e.key === 'Tab' && isMobile()) {
+        const focusable = getFocusableElements();
+        if (focusable.length === 0) return;
 
-    const target = e.target;
-    if (!(target instanceof Node)) return;
+        const currentIndex = focusable.indexOf(document.activeElement);
+        const nextIndex = e.shiftKey
+          ? currentIndex <= 0
+            ? focusable.length - 1
+            : currentIndex - 1
+          : currentIndex === focusable.length - 1
+            ? 0
+            : currentIndex + 1;
 
-    if (target === trigger) return;
-    if (container.contains(target)) return;
+        e.preventDefault();
+        focusable[nextIndex].focus();
+      }
+    },
+    { signal },
+  );
 
-    closeMenu({ restoreFocus: false });
-  });
+  document.addEventListener(
+    'focusin',
+    (e) => {
+      if (!isOpen()) return;
+      if (!isTabletOrAbove()) return;
 
-  window.addEventListener('resize', () => {
-    if (!isOpen()) return;
-    applyPosition();
-  });
+      const target = e.target;
+      if (!(target instanceof Node)) return;
 
-  document.addEventListener('navmenu:open', (e) => {
-    const type = e?.detail?.type;
-    if (type && type !== 'mega' && isOpen()) {
+      if (target === trigger) return;
+      if (container.contains(target)) return;
+
       closeMenu({ restoreFocus: false });
-    }
-  });
+    },
+    { signal },
+  );
 
-  document.addEventListener('navmenu:requestclose', () => {
-    if (isOpen()) {
-      closeMenu({ restoreFocus: false });
-    }
-  });
+  window.addEventListener(
+    'resize',
+    () => {
+      if (!isOpen()) return;
+      const currentIsMobile = isMobile();
+      if (currentIsMobile !== lastIsMobile) {
+        setRoleAndModal(currentIsMobile);
+        if (currentIsMobile) lockBodyScroll();
+        else unlockBodyScroll();
+        lastIsMobile = currentIsMobile;
+      }
+      applyPosition();
+    },
+    { signal },
+  );
+
+  document.addEventListener(
+    'navmenu:open',
+    (e) => {
+      const type = e?.detail?.type;
+      if (type && type !== 'mega' && isOpen()) {
+        closeMenu({ restoreFocus: false });
+      }
+    },
+    { signal },
+  );
+
+  document.addEventListener(
+    'navmenu:requestclose',
+    () => {
+      if (isOpen()) {
+        closeMenu({ restoreFocus: false });
+      }
+    },
+    { signal },
+  );
 
   trigger.setAttribute('aria-haspopup', 'true');
   trigger.setAttribute('aria-expanded', 'false');
@@ -236,6 +281,13 @@ function initializeMegaMenu(options = {}) {
 
   applyPosition();
   updateAria();
+
+  function destroy() {
+    if (isOpen()) closeMenu({ restoreFocus: false });
+    listeners.abort();
+  }
+
+  return { destroy };
 }
 
 export { initializeMegaMenu };

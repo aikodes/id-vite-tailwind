@@ -50,7 +50,7 @@ window.lucide = { createIcons, ChevronRight };
 
 // Initialize when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  initializeMenu(menuData, {
+  const millerMenu = initializeMenu(menuData, {
     millerMenuKeys: ["menu1", "menu2"],
   });
 
@@ -59,4 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   initializeMobileInteractions();
+
+  window.addEventListener("unload", () => {
+    if (millerMenu?.destroy) {
+      millerMenu.destroy();
+    }
+  });
 });

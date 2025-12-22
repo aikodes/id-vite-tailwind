@@ -1,3 +1,4 @@
+import { getMenuOverlayController } from './overlay-controller.js';
 import { isTabletOrAbove, lockBodyScroll, unlockBodyScroll } from './utils.js';
 
 /**
@@ -227,6 +228,8 @@ function initializeMenu(menuData, options = {}) {
       return
     }
 
+    const overlayCtrl = getMenuOverlayController()
+
     document.dispatchEvent(
       new CustomEvent('navmenu:open', {
         detail: {
@@ -252,6 +255,7 @@ function initializeMenu(menuData, options = {}) {
     }
 
     // Show menu and overlay (two-phase to ensure CSS transition runs)
+    overlayCtrl.acquire()
     menuOverlay.classList.remove("hidden")
     columnMenuContainer.classList.remove("hidden")
 
@@ -284,6 +288,8 @@ function initializeMenu(menuData, options = {}) {
   function closeMenu({ restoreFocus = true } = {}) {
     const closingKey = activeMainMenu
 
+    const overlayCtrl = getMenuOverlayController()
+
     // Hide menu and overlay
     const shouldKeepOverlayActive = Boolean(
       megaMenuContainer && megaMenuContainer.classList.contains('active'),
@@ -294,7 +300,10 @@ function initializeMenu(menuData, options = {}) {
     // Use setTimeout to match the transition duration
     setTimeout(() => {
       const shouldHideOverlay = !(megaMenuContainer && megaMenuContainer.classList.contains('active'))
-      if (shouldHideOverlay) menuOverlay.classList.add("hidden")
+      if (shouldHideOverlay) {
+        overlayCtrl.release()
+        menuOverlay.classList.add("hidden")
+      }
       columnMenuContainer.classList.add("hidden")
 
       // Reset active states
