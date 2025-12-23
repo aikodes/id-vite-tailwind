@@ -17,9 +17,7 @@
 
 @utility extend-touch-target {
   @media (pointer: coarse) {
-    @apply relative touch-manipulation after:bg-pink-500/10 after:absolute after:-inset-2;
+    @apply relative touch-manipulation after:absolute after:-inset-2;
+    /* @apply after:bg-pink-500/10; */
   }
 }
-
-
-
