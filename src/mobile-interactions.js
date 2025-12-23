@@ -55,7 +55,7 @@ export function initializeMobileInteractions() {
   }
 
   // --- Mobile Search ---
-  const mobileSearchTrigger = document.getElementById("mobile-search-trigger");
+  // Note: Mobile search trigger removed - search now only available in drawer
   const unifiedSearchContainer = document.getElementById("unified-search-container");
   const mobileSearchClose = document.getElementById("mobile-search-close");
   const searchInput = document.getElementById("search-input");
@@ -98,9 +98,7 @@ export function initializeMobileInteractions() {
   }
 
   // Add event listeners with signal for cleanup
-  if (mobileSearchTrigger) {
-    mobileSearchTrigger.addEventListener("click", openSearch, { signal });
-  }
+  // Mobile search trigger removed - search now only available in drawer
 
   if (mobileSearchClose) {
     mobileSearchClose.addEventListener("click", closeSearch, { signal });

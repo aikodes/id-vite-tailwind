@@ -213,7 +213,7 @@ export const menuData = {
           { id: "sony", label: "Sony", hasChildren: true },
           { id: "microsoft", label: "Microsoft", hasChildren: true },
           { id: "levi", label: "Levi's", hasChildren: true },
-          { id: "amazon", label: "Amazon Basics", hasChildren: true },
+          // { id: "amazon", label: "Amazon Basics", hasChildren: true },
         ],
       },
     ],
