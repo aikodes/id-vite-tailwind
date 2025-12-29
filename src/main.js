@@ -2,6 +2,7 @@ import { initializeMenu } from "./miller-menu.js";
 import { menuData } from "./menu-data.js";
 import { initializeMegaMenu } from "./mega-menu.js";
 import { initializeMobileInteractions } from "./mobile-interactions.js";
+import { updateNotificationTextContrast } from "./utils.js";
 import "./notifications.js";
 import "basecoat-css/all";
 // import "./toggle-tabs.js";
@@ -24,6 +25,7 @@ import {
   X,
   UserCog,
   Menu,
+  ArrowRight
 } from "lucide";
 
 createIcons({
@@ -42,11 +44,12 @@ createIcons({
     X,
     UserCog,
     Menu,
+    ArrowRight,
   },
 });
 
 // Make lucide globally available for dynamic icon creation
-window.lucide = { createIcons, ChevronRight };
+window.lucide = { createIcons };
 
 // Initialize when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -59,6 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   initializeMobileInteractions();
+
+  // Initialize text contrast for notification color
+  updateNotificationTextContrast();
 
   window.addEventListener("pagehide", () => {
     if (millerMenu?.destroy) {

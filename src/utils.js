@@ -37,3 +37,25 @@ export function unlockBodyScroll() {
     delete body.dataset.navPrevOverflow;
   }
 }
+
+
+export function getContrastColor(hexColor) {
+  // Remove # if present
+  const cleanColor = hexColor.replace('#', '');
+  const rgb = parseInt(cleanColor, 16);
+  const r = (rgb >> 16) & 0xff;
+  const g = (rgb >> 8) & 0xff;
+  const b = (rgb >> 0) & 0xff;
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.5 ? '#000000' : '#ffffff';
+}
+
+export function updateNotificationTextContrast() {
+  const root = document.documentElement;
+  const notificationColor = getComputedStyle(root).getPropertyValue('--notification-color').trim();
+  
+  if (notificationColor) {
+    const textColor = getContrastColor(notificationColor);
+    root.style.setProperty('--notification-text-color', textColor);
+  }
+}

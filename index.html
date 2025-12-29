@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/style.css" rel="stylesheet" />
     <title>ID's Vite + TW</title>
+    <style>
+      :root {
+        --notification-color: #ff4f00;
+      }
+    </style>
   </head>
-  <body
-    class="grid min-h-svh grid-rows-[auto_1fr_auto] overscroll-none bg-background font-sans text-sm"
-  >
+  <body class="grid min-h-svh grid-rows-[auto_1fr_auto]">
     <div
       id="notification"
       role="status"
@@ -57,26 +60,35 @@
 
     <header class="relative border-b">
       <!-- Top Utility Bar -->
-      <div class="border-b bg-muted/50">
-        <div class="flex flex-col items-center justify-between text-sm">
+      <!-- class="grid grid-flow-col md:auto-cols-[1fr_auto]" -->
+      <div
+        class="text-sm"
+        style="background: var(--notification-color, var(--color-muted))"
+      >
+        <div class="container justify-end lg:flex lg:px-8 air:px-6 2xl:px-0">
           <!-- Notification Banner -->
           <div
-            class="w-full flex-1 p-2 text-center"
-            style="background: #f95700; font-weight: 500; color: #fff"
+            class="flex w-full flex-1 items-center justify-center py-2 text-center font-semibold text-balance lg:justify-center lg:[&:has(~[data-account-selector])]:justify-start"
+            style="background: var(--notification-color); color: white"
           >
-            <p>Free shipping during December</p>
+            <p>Enjoy complimentary express delivery on orders over $50</p>
           </div>
           <!-- Account Selector -->
-          <div class="p-2 text-center text-xs text-balance">
-            <a href="#" class="text-muted-foreground hover:text-foreground">
-              Shopping for
-              <strong class="font-semibold">(8W888000) WWWW WW Ltd</strong>
+          <div
+            class="account-selector flex-1 items-center justify-center gap-1 bg-muted py-1 text-center text-muted-foreground md:py-2 md:text-[var(--notification-text-size)] lg:flex lg:flex-none lg:justify-end lg:bg-transparent"
+            data-account-selector
+          >
+            Shopping for
+            <strong class="text-xs font-semibold"
+              >(8W888000) WWWW WW Ltd</strong
+            >
+            <a href="#" class="btn-sm-secondary h-5 text-xs">
+              <span class="">Switch Customer</span>
               <svg
-                data-lucide="dot"
+                data-lucide="arrow-right"
                 class="inline size-4"
                 aria-hidden="true"
               ></svg>
-              Switch Customer&nbsp;<span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </div>
@@ -84,21 +96,10 @@
 
       <!-- Main Header -->
       <div
-        class="container grid grid-cols-[1fr_2fr_1fr] items-center justify-between gap-4 px-2 py-4 lg:px-8 air:px-6 2xl:px-0"
+        class="container grid grid-cols-[2fr_1fr_auto] items-center justify-between px-2 py-4 lg:grid-cols-[1fr_2fr_auto] lg:gap-4 lg:px-8 air:px-6 2xl:px-0"
       >
-        <!-- Mobile Menu Trigger -->
-        <button
-          id="mobile-menu-trigger"
-          class="btn-lg-icon-ghost extend-touch-target lg:hidden"
-        >
-          <svg data-lucide="menu"></svg>
-          <span class="sr-only">Menu</span>
-        </button>
-
         <!-- Logo -->
-        <div
-          class="flex flex-1 justify-center text-2xl font-bold lg:flex-initial lg:flex-shrink-0 lg:justify-start"
-        >
+        <div class="flex-1 lg:flex-initial lg:flex-shrink-0 lg:justify-start">
           <svg
             class="h-10 w-32 border border-primary bg-white text-primary"
             preserveAspectRatio="none"
@@ -137,7 +138,7 @@
         <!-- Action Icons -->
         <div class="flex items-center justify-end">
           <!-- Fast Order - Desktop Only -->
-          <button class="btn-outline hidden text-sm lg:flex xl:mr-2">
+          <button class="btn-sm-outline hidden text-sm lg:flex xl:mr-2">
             <svg data-lucide="zap" aria-hidden="true" class="size-4"></svg>
             <span>Fast Order</span>
           </button>
@@ -366,6 +367,15 @@
             >
           </button>
         </div>
+
+        <!-- Mobile Menu Trigger -->
+        <button
+          id="mobile-menu-trigger"
+          class="btn-lg-icon-ghost extend-touch-target justify-self-end lg:hidden"
+        >
+          <svg data-lucide="menu"></svg>
+          <span class="sr-only">Menu</span>
+        </button>
       </div>
       <nav class="hidden border-t bg-accent lg:block">
         <div class="container">
@@ -669,7 +679,12 @@
         </div>
       </div>
       <div class="container p-4">
-        <div class="h-[300px] rounded-lg bg-gray-200"></div>
+        <div class="h-[900px] rounded-lg">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis
+          commodi, labore aspernatur saepe cum quas perferendis illum veritatis
+          fugiat, dolor quidem officia, expedita laudantium esse hic obcaecati
+          ipsam voluptatem odio.
+        </div>
       </div>
     </main>
 
