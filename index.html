@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <header class="relative">
+    <header class="relative border-b">
       <!-- Top Utility Bar -->
       <!-- class="grid grid-flow-col md:auto-cols-[1fr_auto]" -->
       <div
@@ -75,9 +75,8 @@
           </div>
           <!-- Account Selector -->
           <div
-            class="account-selector flex-1 items-center justify-center gap-1 bg-muted py-1 text-center text-muted-foreground md:py-2 md:text-[var(--notification-text-size)] lg:flex lg:flex-none lg:justify-end lg:bg-transparent"
+            class="account-selector lg:text flex-1 items-center justify-center gap-1 bg-muted py-1 text-center text-muted-foreground md:py-2 lg:flex lg:flex-none lg:justify-end lg:bg-transparent lg:text-[var(--notification-text-color)]"
             data-account-selector
-            style="color: var(--notification-text-color)"
           >
             Shopping for
             <strong class="text-xs font-bold">(8W888000) WWWW WW Ltd</strong>
@@ -95,7 +94,7 @@
 
       <!-- Main Header -->
       <div
-        class="container grid grid-cols-[2fr_1fr_auto] items-center justify-between px-2 py-4 lg:grid-cols-[1fr_2fr_auto] lg:gap-4 lg:px-8 air:px-6 2xl:px-0"
+        class="container grid grid-cols-[2fr_1fr_auto] items-center justify-between py-4 pr-2 pl-4 md:grid-cols-[1fr_2fr_auto_auto] lg:gap-4 lg:border-none lg:px-8 air:px-6 2xl:px-0"
       >
         <!-- Logo -->
         <div class="flex-1 lg:flex-initial lg:flex-shrink-0 lg:justify-start">
@@ -116,11 +115,11 @@
         </div>
 
         <!-- Search Bar - Desktop Only -->
-        <div class="hidden max-w-2xl flex-1 lg:flex">
+        <div class="hidden max-w-2xl flex-1 md:flex">
           <div class="relative w-full">
             <input
               type="text"
-              class="input w-full pr-16"
+              class="input w-full border-none bg-muted pr-16 text-muted-foreground"
               placeholder="Search products"
               id="search-input"
               data-search-input
@@ -376,7 +375,7 @@
           <span class="sr-only">Menu</span>
         </button>
       </div>
-      <nav class="hidden border-t bg-accent lg:block">
+      <nav class="hidden border-t lg:block">
         <div class="container">
           <!-- class="flex w-full max-w-full flex-nowrap overflow-x-auto [&>li]:shrink-0" -->
           <!-- class="grid items-center py-2 **:data-lucide:-rotate-90 md:grid-cols-[repeat(auto-fit,minmax(0,1fr))] md:**:data-lucide:rotate-0" -->
@@ -677,7 +676,7 @@
           </button>
         </div>
       </div>
-      <div class="container p-4">
+      <div class="container px-4 lg:px-8 air:px-6 2xl:px-0">
         <div class="h-[900px] rounded-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis
           commodi, labore aspernatur saepe cum quas perferendis illum veritatis
