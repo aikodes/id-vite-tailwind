@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "allow",
+    "style": "warn",
+    "restriction": "warn",
+    "nursery": "allow"
+  },
+  "rules": {
+    "no-unused-vars": "warn"
+  },
+  "env": {
+    "es2022": true,
+    "browser": true
+  },
+  "plugins": []
+}

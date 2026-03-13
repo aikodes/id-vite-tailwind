@@ -1,13 +1,12 @@
-import { initializeMenu } from "./miller-menu.js";
-import { menuData } from "./menu-data.js";
-import { initializeMegaMenu } from "./mega-menu.js";
-import { initializeMobileInteractions } from "./mobile-interactions.js";
-import { updateNotificationTextContrast } from "./utils.js";
-import "./theme-switcher.js";
-import "./notifications.js";
-import "basecoat-css/all";
+import { initializeMenu } from './miller-menu.js';
+import { menuData } from './menu-data.js';
+import { initializeMegaMenu } from './mega-menu.js';
+import { initializeMobileInteractions } from './mobile-interactions.js';
+import { updateNotificationTextContrast } from './utils.js';
+import './theme-switcher.js';
+import './notifications.js';
+import 'basecoat-css/all';
 // import "./toggle-tabs.js";
-
 
 // Recommended way, to include only the icons you need.
 import {
@@ -26,8 +25,8 @@ import {
   X,
   UserCog,
   Menu,
-  ArrowRight
-} from "lucide";
+  ArrowRight,
+} from 'lucide';
 
 createIcons({
   icons: {
@@ -53,13 +52,13 @@ createIcons({
 window.lucide = { createIcons };
 
 // Initialize when the DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   const millerMenu = initializeMenu(menuData, {
-    millerMenuKeys: ["menu1", "menu2"],
+    millerMenuKeys: ['menu1', 'menu2'],
   });
 
   initializeMegaMenu({
-    menuKey: "menu3",
+    menuKey: 'menu3',
   });
 
   initializeMobileInteractions();
@@ -67,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize text contrast for notification color
   updateNotificationTextContrast();
 
-  window.addEventListener("pagehide", () => {
+  window.addEventListener('pagehide', () => {
     if (millerMenu?.destroy) {
       millerMenu.destroy();
     }

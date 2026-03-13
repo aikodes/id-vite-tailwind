@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "sortTailwindcss": {
+    "stylesheet": "./src/style.css"
+  },
+  "printWidth": 80,
+  "singleQuote": false,
+  "sortPackageJson": false,
+  "ignorePatterns": []
+}

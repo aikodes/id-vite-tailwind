@@ -1,5 +1,10 @@
 import { getMenuOverlayController } from './overlay-controller.js';
-import { isTabletOrAbove, isMobile, lockBodyScroll, unlockBodyScroll } from './utils.js';
+import {
+  isTabletOrAbove,
+  isMobile,
+  lockBodyScroll,
+  unlockBodyScroll,
+} from './utils.js';
 
 const MENU_CLOSE_ANIMATION_DURATION = 200;
 
@@ -24,7 +29,9 @@ function initializeMegaMenu(options = {}) {
     return;
   }
 
-  const menuItem = mainMenu.querySelector(`.main-menu-item[data-menu="${menuKey}"]`);
+  const menuItem = mainMenu.querySelector(
+    `.main-menu-item[data-menu="${menuKey}"]`,
+  );
   const trigger = menuItem?.querySelector('button');
 
   if (!menuItem || !(trigger instanceof HTMLButtonElement)) {
@@ -63,7 +70,8 @@ function initializeMegaMenu(options = {}) {
 
     return Array.from(elements).filter((el) => {
       if (!(el instanceof HTMLElement)) return false;
-      if (el.offsetParent === null && el !== document.activeElement) return false;
+      if (el.offsetParent === null && el !== document.activeElement)
+        return false;
       return true;
     });
   }

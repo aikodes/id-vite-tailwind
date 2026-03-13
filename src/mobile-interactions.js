@@ -1,4 +1,4 @@
-import { lockBodyScroll, unlockBodyScroll } from "./utils.js";
+import { lockBodyScroll, unlockBodyScroll } from './utils.js';
 
 /**
  * Mobile Header Interactions - Improved Version
@@ -21,11 +21,12 @@ export function initializeMobileInteractions() {
   function getFocusableElements(container) {
     try {
       const elements = container.querySelectorAll(
-        'button:not([disabled]), a[href]:not([aria-disabled="true"]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        'button:not([disabled]), a[href]:not([aria-disabled="true"]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
       return Array.from(elements).filter((el) => {
         if (!(el instanceof HTMLElement)) return false;
-        if (el.offsetParent === null && el !== document.activeElement) return false;
+        if (el.offsetParent === null && el !== document.activeElement)
+          return false;
         return true;
       });
     } catch (error) {
@@ -56,37 +57,22 @@ export function initializeMobileInteractions() {
 
   // --- Mobile Search ---
   // Note: Mobile search trigger removed - search now only available in drawer
-  const unifiedSearchContainer = document.getElementById("unified-search-container");
-  const mobileSearchClose = document.getElementById("mobile-search-close");
-  const searchInput = document.getElementById("search-input");
+  const unifiedSearchContainer = document.getElementById(
+    'unified-search-container',
+  );
+  const mobileSearchClose = document.getElementById('mobile-search-close');
+  const _searchInput = document.getElementById('search-input');
 
   let searchPreviousFocus = null;
 
   function isSearchOpen() {
-    return Boolean(unifiedSearchContainer?.hasAttribute("data-open"));
-  }
-
-  function openSearch() {
-    try {
-      if (unifiedSearchContainer) {
-        searchPreviousFocus = document.activeElement;
-        unifiedSearchContainer.setAttribute("data-open", "");
-        if (searchInput) {
-          // Use requestAnimationFrame to ensure DOM is updated
-          requestAnimationFrame(() => {
-            searchInput.focus();
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Error opening search:', error);
-    }
+    return Boolean(unifiedSearchContainer?.hasAttribute('data-open'));
   }
 
   function closeSearch() {
     try {
       if (unifiedSearchContainer) {
-        unifiedSearchContainer.removeAttribute("data-open");
+        unifiedSearchContainer.removeAttribute('data-open');
         if (searchPreviousFocus instanceof HTMLElement) {
           searchPreviousFocus.focus();
         }
@@ -101,22 +87,22 @@ export function initializeMobileInteractions() {
   // Mobile search trigger removed - search now only available in drawer
 
   if (mobileSearchClose) {
-    mobileSearchClose.addEventListener("click", closeSearch, { signal });
+    mobileSearchClose.addEventListener('click', closeSearch, { signal });
   }
 
   // --- Mobile Drawer ---
-  const mobileMenuTrigger = document.getElementById("mobile-menu-trigger");
-  const mobileDrawer = document.getElementById("mobile-drawer");
-  const mobileDrawerOverlay = document.getElementById("mobile-drawer-overlay");
-  const mobileDrawerClose = document.getElementById("mobile-drawer-close");
-  const mobileMenuList = document.getElementById("mobile-menu-list");
-  const mainMenu = document.getElementById("main-menu");
+  const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const mobileDrawerOverlay = document.getElementById('mobile-drawer-overlay');
+  const mobileDrawerClose = document.getElementById('mobile-drawer-close');
+  const mobileMenuList = document.getElementById('mobile-menu-list');
+  const mainMenu = document.getElementById('main-menu');
 
   let drawerPreviousFocus = null;
   let isDrawerOpening = false; // Prevent race conditions
 
   function isDrawerOpen() {
-    return Boolean(mobileDrawer?.hasAttribute("data-open"));
+    return Boolean(mobileDrawer?.hasAttribute('data-open'));
   }
 
   function openDrawer() {
@@ -126,8 +112,8 @@ export function initializeMobileInteractions() {
     try {
       if (mobileDrawer && mobileDrawerOverlay) {
         drawerPreviousFocus = document.activeElement;
-        mobileDrawer.setAttribute("data-open", "");
-        mobileDrawerOverlay.setAttribute("data-open", "");
+        mobileDrawer.setAttribute('data-open', '');
+        mobileDrawerOverlay.setAttribute('data-open', '');
         lockBodyScroll();
 
         // Focus first focusable element in drawer
@@ -148,8 +134,8 @@ export function initializeMobileInteractions() {
   function closeDrawer() {
     try {
       if (mobileDrawer && mobileDrawerOverlay) {
-        mobileDrawer.removeAttribute("data-open");
-        mobileDrawerOverlay.removeAttribute("data-open");
+        mobileDrawer.removeAttribute('data-open');
+        mobileDrawerOverlay.removeAttribute('data-open');
         unlockBodyScroll();
 
         if (drawerPreviousFocus instanceof HTMLElement) {
@@ -163,134 +149,154 @@ export function initializeMobileInteractions() {
   }
 
   if (mobileMenuTrigger) {
-    mobileMenuTrigger.addEventListener("click", openDrawer, { signal });
+    mobileMenuTrigger.addEventListener('click', openDrawer, { signal });
   }
 
   if (mobileDrawerClose) {
-    mobileDrawerClose.addEventListener("click", closeDrawer, { signal });
+    mobileDrawerClose.addEventListener('click', closeDrawer, { signal });
   }
 
   if (mobileDrawerOverlay) {
-    mobileDrawerOverlay.addEventListener("click", closeDrawer, { signal });
+    mobileDrawerOverlay.addEventListener('click', closeDrawer, { signal });
   }
 
   // --- Keyboard Handlers ---
-  document.addEventListener("keydown", (e) => {
-    try {
-      // Escape closes search overlay
-      if (e.key === "Escape" && isSearchOpen()) {
-        closeSearch();
-        return;
-      }
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      try {
+        // Escape closes search overlay
+        if (e.key === 'Escape' && isSearchOpen()) {
+          closeSearch();
+          return;
+        }
 
-      // Escape closes drawer
-      if (e.key === "Escape" && isDrawerOpen()) {
-        closeDrawer();
-        return;
-      }
+        // Escape closes drawer
+        if (e.key === 'Escape' && isDrawerOpen()) {
+          closeDrawer();
+          return;
+        }
 
-      // Focus trap for drawer
-      if (e.key === "Tab" && isDrawerOpen() && mobileDrawer) {
-        trapFocus(e, mobileDrawer);
+        // Focus trap for drawer
+        if (e.key === 'Tab' && isDrawerOpen() && mobileDrawer) {
+          trapFocus(e, mobileDrawer);
+        }
+      } catch (error) {
+        console.error('Error in keyboard handler:', error);
       }
-    } catch (error) {
-      console.error('Error in keyboard handler:', error);
-    }
-  }, { signal });
+    },
+    { signal },
+  );
 
   // --- Back to Mobile Menu Buttons ---
-  const backButtons = document.querySelectorAll(".back-to-mobile-menu");
+  const backButtons = document.querySelectorAll('.back-to-mobile-menu');
   backButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // Prevent multiple simultaneous requests
-      if (isDrawerOpening) return;
+    btn.addEventListener(
+      'click',
+      () => {
+        // Prevent multiple simultaneous requests
+        if (isDrawerOpening) return;
 
-      // Dispatch navmenu:requestclose to ask menus to close
-      document.dispatchEvent(new CustomEvent("navmenu:requestclose"));
+        // Dispatch navmenu:requestclose to ask menus to close
+        document.dispatchEvent(new CustomEvent('navmenu:requestclose'));
 
-      // Use a promise-based approach with proper cleanup
-      let menuClosed = false;
-      
-      const handleMenuClose = () => {
-        menuClosed = true;
-        if (!isDrawerOpen()) {
-          openDrawer();
-        }
-      };
+        // Use a promise-based approach with proper cleanup
+        let menuClosed = false;
 
-      // Listen once for the menu close event
-      document.addEventListener("navmenu:close", handleMenuClose, { once: true, signal });
+        const handleMenuClose = () => {
+          menuClosed = true;
+          if (!isDrawerOpen()) {
+            openDrawer();
+          }
+        };
 
-      // Fallback timeout with longer delay to match animations
-      // Guard against already-aborted signal to avoid accumulating abort listeners
-      if (signal.aborted) return;
+        // Listen once for the menu close event
+        document.addEventListener('navmenu:close', handleMenuClose, {
+          once: true,
+          signal,
+        });
 
-      const fallbackTimeout = setTimeout(() => {
-        if (!menuClosed && !isDrawerOpen()) {
-          openDrawer();
-        }
-      }, 150); // Increased timeout for smoother animations
+        // Fallback timeout with longer delay to match animations
+        // Guard against already-aborted signal to avoid accumulating abort listeners
+        if (signal.aborted) return;
 
-      // Clean up timeout if signal is aborted (use once to avoid accumulation)
-      signal.addEventListener('abort', () => clearTimeout(fallbackTimeout), { once: true });
-    }, { signal });
+        const fallbackTimeout = setTimeout(() => {
+          if (!menuClosed && !isDrawerOpen()) {
+            openDrawer();
+          }
+        }, 150); // Increased timeout for smoother animations
+
+        // Clean up timeout if signal is aborted (use once to avoid accumulation)
+        signal.addEventListener('abort', () => clearTimeout(fallbackTimeout), {
+          once: true,
+        });
+      },
+      { signal },
+    );
   });
 
   // --- Populate Mobile Menu ---
   if (mainMenu && mobileMenuList) {
     try {
-      mobileMenuList.innerHTML = "";
+      mobileMenuList.innerHTML = '';
 
-      const mainMenuItems = mainMenu.querySelectorAll(".main-menu-item");
+      const mainMenuItems = mainMenu.querySelectorAll('.main-menu-item');
 
       mainMenuItems.forEach((item) => {
-        const originalButton = item.querySelector("button, a");
+        const originalButton = item.querySelector('button, a');
         if (!originalButton) return;
 
-        const li = document.createElement("li");
-        const button = document.createElement("button");
-        button.type = "button";
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
 
         // Copy text content (without chevron text)
-        const textContent = originalButton.childNodes[0]?.textContent?.trim() || 
-                            originalButton.textContent.trim().split('\n')[0].trim();
+        const textContent =
+          originalButton.childNodes[0]?.textContent?.trim() ||
+          originalButton.textContent.trim().split('\n')[0].trim();
         button.textContent = textContent;
 
-        button.className = "flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-100 text-left text-sm font-medium text-gray-700";
+        button.className =
+          'flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium';
 
         // Add chevron if it was a dropdown/menu
-        const hasChevron = originalButton.querySelector("svg");
+        const hasChevron = originalButton.querySelector('svg');
         if (hasChevron) {
-          const chevron = document.createElement("span");
-          chevron.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+          const chevron = document.createElement('span');
+          chevron.innerHTML =
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
           button.appendChild(chevron);
         }
 
-        button.addEventListener("click", () => {
-          try {
-            if (originalButton.tagName.toLowerCase() === "a") {
-              window.location.href = originalButton.href;
-            } else {
-              closeDrawer();
-              // Use a more reliable approach with animation detection
-              let retryCount = 0;
-              const maxRetries = 10;
-              const checkDrawerClosed = () => {
-                if (signal.aborted) return; // Stop retries on cleanup
-                if (!isDrawerOpen() || retryCount >= maxRetries) {
-                  originalButton.click();
-                } else {
-                  retryCount++;
-                  // Check again after a short delay
-                  setTimeout(checkDrawerClosed, 50);
-                }
-              };
-              setTimeout(checkDrawerClosed, 50);
+        button.addEventListener(
+          'click',
+          () => {
+            try {
+              if (originalButton.tagName.toLowerCase() === 'a') {
+                window.location.href = originalButton.href;
+              } else {
+                closeDrawer();
+                // Use a more reliable approach with animation detection
+                let retryCount = 0;
+                const maxRetries = 10;
+                const checkDrawerClosed = () => {
+                  if (signal.aborted) return; // Stop retries on cleanup
+                  if (!isDrawerOpen() || retryCount >= maxRetries) {
+                    originalButton.click();
+                  } else {
+                    retryCount++;
+                    // Check again after a short delay
+                    setTimeout(checkDrawerClosed, 50);
+                  }
+                };
+                setTimeout(checkDrawerClosed, 50);
+              }
+            } catch (error) {
+              console.error('Error handling button click:', error);
             }
-          } catch (error) {
-            console.error('Error handling button click:', error);
-          }
-        }, { signal });
+          },
+          { signal },
+        );
 
         li.appendChild(button);
         mobileMenuList.appendChild(li);

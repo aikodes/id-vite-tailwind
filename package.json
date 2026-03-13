@@ -6,11 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "oxfmt . && oxfmt --config .oxfmtrc-css.json src/**/*.css",
+    "format:check": "oxfmt --check . && oxfmt --config .oxfmtrc-css.json --check src/**/*.css",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "devDependencies": {
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "oxfmt": "^0.40.0",
+    "oxlint": "^1.55.0",
     "tw-animate-css": "^1.4.0",
     "vite": "^8.0.0"
   },

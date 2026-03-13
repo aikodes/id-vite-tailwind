@@ -21,7 +21,9 @@
       class="fixed inset-x-0 bottom-0 z-50 hidden animate-in slide-in-from-bottom"
     >
       <div class="p-4">
-        <div class="overflow-clip rounded-md bg-popover text-popover-foreground shadow-lg">
+        <div
+          class="overflow-clip rounded-md bg-popover text-popover-foreground shadow-lg"
+        >
           <div class="h-0.5 w-full overflow-hidden rounded-full bg-black/10">
             <div
               id="progressBar"
@@ -75,7 +77,7 @@
           </div>
           <!-- Account Selector -->
           <div
-            class="flex-1 items-center justify-center gap-1 bg-muted/90 py-1 text-center text-muted-foreground md:py-2 lg:flex lg:flex-none lg:justify-end lg:bg-transparent lg:text-[var(--notification-text-color)] text-xs"
+            class="flex-1 items-center justify-center gap-1 bg-muted/90 py-1 text-center text-xs text-muted-foreground md:py-2 lg:flex lg:flex-none lg:justify-end lg:bg-transparent lg:text-[var(--notification-text-color)]"
             data-account-selector
           >
             Shopping for
@@ -143,10 +145,44 @@
             data-tooltip="Toggle dark mode"
             data-side="bottom"
             onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
-            class="btn-icon-outline size-8 ml-2"
+            class="btn-icon-outline ml-2 size-8"
           >
-            <span class="hidden dark:block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg></span>
-            <span class="block dark:hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg></span>
+            <span class="hidden dark:block"
+              ><svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+            </span>
+            <span class="block dark:hidden"
+              ><svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+              </svg>
+            </span>
           </button>
 
           <!-- User Dropdown -->
@@ -178,7 +214,6 @@
                   <div role="heading" id="account-options">Account Options</div>
                   <div role="menuitem">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -199,7 +234,6 @@
                   </div>
                   <div role="menuitem">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -220,7 +254,6 @@
                   </div>
                   <div role="menuitem">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -251,7 +284,6 @@
                     class="group"
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -279,7 +311,6 @@
                     aria-disabled="true"
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -306,7 +337,6 @@
                     class="group"
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -331,7 +361,6 @@
                 <hr role="separator" />
                 <div role="menuitem">
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -500,7 +529,7 @@
           <button
             id="mega-menu-close-button"
             type="button"
-            class="rounded-full p-1"
+            class="btn-lg-icon-ghost ml-auto"
             aria-label="Close menu"
           >
             <svg data-lucide="x" role="img" aria-label="Close"></svg>
@@ -512,80 +541,44 @@
             <section class="md:col-span-8">
               <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <div>
-                  <h3 class="text-sm font-medium ">Category</h3>
+                  <h3 class="text-sm font-medium">Category</h3>
                   <ul class="mt-3 space-y-2">
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <h3 class="text-sm font-medium">Category</h3>
                   <ul class="mt-3 space-y-2">
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <h3 class="text-sm font-medium">Category</h3>
                   <ul class="mt-3 space-y-2">
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block text-sm"
-                        >Link item</a
-                      >
+                      <a href="#" class="block text-sm">Link item</a>
                     </li>
                   </ul>
                 </div>
@@ -593,9 +586,9 @@
             </section>
 
             <aside class="md:col-span-4">
-              <div class="rounded-lg border bg-muted text-muted-foreground p-4">
-                <p class="text-sm font-medium ">Featured</p>
-                <p class="mt-2 text-sm ">
+              <div class="rounded-lg border bg-muted p-4 text-muted-foreground">
+                <p class="text-sm font-medium">Featured</p>
+                <p class="mt-2 text-sm">
                   Use this area for a promo card, image, newsletter, or CTA.
                 </p>
                 <a
@@ -675,16 +668,10 @@
       <!-- Main content -->
       <div class="container px-4 lg:px-8 air:px-6 2xl:px-0">
         <div class="flex flex-col items-center justify-center gap-2 py-8">
-          <p class="text-2xl text-gray-500">Main Content area</p>
-          <button
-            id="showNotification"
-            class="btn"
-          >
-            Show Notification
-          </button>
+          <p class="text-2xl">Main Content area</p>
+          <button id="showNotification" class="btn">Show Notification</button>
         </div>
       </div>
-      
     </main>
 
     <footer class="bg-secondary py-8 lg:py-16">
@@ -714,22 +701,22 @@
           <div>
             <h3 class="mb-4 font-bold">Product</h3>
             <ul class="space-y-4 text-muted-foreground">
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Overview</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Pricing</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Marketplace</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Features</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Integrations</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Pricing</a>
               </li>
             </ul>
@@ -737,22 +724,22 @@
           <div>
             <h3 class="mb-4 font-bold">Company</h3>
             <ul class="space-y-4 text-muted-foreground">
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">About</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Team</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Blog</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Careers</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Contact</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Privacy</a>
               </li>
             </ul>
@@ -760,13 +747,13 @@
           <div>
             <h3 class="mb-4 font-bold">Resources</h3>
             <ul class="space-y-4 text-muted-foreground">
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Help</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Sales</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Advertise</a>
               </li>
             </ul>
@@ -774,13 +761,13 @@
           <div>
             <h3 class="mb-4 font-bold">Social</h3>
             <ul class="space-y-4 text-muted-foreground">
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Twitter</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">Instagram</a>
               </li>
-              <li class="font-medium hover:text-primary">
+              <li class="font-medium">
                 <a href="#">LinkedIn</a>
               </li>
             </ul>
@@ -791,10 +778,10 @@
         >
           <p>© 2026 company.com. All rights reserved.</p>
           <ul class="flex gap-4">
-            <li class="underline hover:text-primary">
+            <li class="underline">
               <a href="#">Terms and Conditions</a>
             </li>
-            <li class="underline hover:text-primary">
+            <li class="underline">
               <a href="#">Privacy Policy</a>
             </li>
           </ul>

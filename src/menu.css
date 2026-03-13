@@ -27,14 +27,6 @@
   flex: 1;
 }
 
-/* Close button */
-#menu-close-button {
-  margin-left: auto;
-  padding: 0.25rem;
-  border-radius: 9999px;
-  transition: background-color 0.2s;
-}
-
 /* Columns wrapper */
 #columns-wrapper {
   display: flex;
