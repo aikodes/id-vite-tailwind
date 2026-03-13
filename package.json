@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "oxfmt . && oxfmt --config .oxfmtrc-css.json src/**/*.css",
-    "format:check": "oxfmt --check . && oxfmt --config .oxfmtrc-css.json --check src/**/*.css",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix"
   },

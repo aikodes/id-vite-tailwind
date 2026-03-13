@@ -6,5 +6,5 @@
   "printWidth": 80,
   "singleQuote": true,
   "sortPackageJson": false,
-  "ignorePatterns": ["**/*.css"]
+  "ignorePatterns": []
 }
