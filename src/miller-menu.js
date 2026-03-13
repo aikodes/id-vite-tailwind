@@ -376,14 +376,14 @@ function initializeMenu(menuData, options = {}) {
     // Create column element
     const column = document.createElement("div")
     column.className =
-      "column w-[clamp(200px,25vw,280px)] min-w-[200px] max-w-[320px] border-r border-gray-200 overflow-y-auto"
+      "column w-[clamp(200px,25vw,280px)] min-w-[200px] max-w-[320px] border-r overflow-y-auto"
     column.setAttribute('role', 'listbox')
     column.setAttribute('aria-label', columnData.title || 'Column')
     column.dataset.level = level
 
     // Add column title
     const title = document.createElement("div")
-    title.className = "font-medium p-3 border-b border-gray-200"
+    title.className = "font-medium p-3 border-b"
     title.textContent = columnData.title || "Column"
     title.setAttribute('role', 'heading')
     title.setAttribute('aria-level', `${Math.min(6, level + 2)}`)
@@ -406,7 +406,7 @@ function initializeMenu(menuData, options = {}) {
       }
 
       itemEl.className =
-        "column-item flex justify-between items-center p-3 cursor-pointer transition-colors hover:bg-gray-100"
+        "column-item flex justify-between items-center p-3 cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground w-full"
       itemEl.dataset.id = item.id
       itemEl.dataset.hasChildren = item.hasChildren ? 'true' : 'false'
       itemEl.setAttribute('role', 'option')
@@ -419,7 +419,7 @@ function initializeMenu(menuData, options = {}) {
 
       // Check if this item is in the active path
       if (activePath[level] === item.id) {
-        itemEl.classList.add('active')
+        itemEl.classList.add('bg-accent', 'text-accent-foreground')
         itemEl.setAttribute('aria-selected', 'true')
         if (level === activePath.length - 1) {
           itemEl.classList.add('current')

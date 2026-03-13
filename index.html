@@ -21,7 +21,7 @@
       class="fixed inset-x-0 bottom-0 z-50 hidden animate-in slide-in-from-bottom"
     >
       <div class="p-4">
-        <div class="overflow-clip rounded-md bg-white shadow-lg">
+        <div class="overflow-clip rounded-md bg-popover text-popover-foreground shadow-lg">
           <div class="h-0.5 w-full overflow-hidden rounded-full bg-black/10">
             <div
               id="progressBar"
@@ -95,7 +95,7 @@
         <!-- Logo -->
         <div class="flex-1 lg:flex-initial lg:flex-shrink-0 lg:justify-start">
           <svg
-            class="h-10 w-32 border border-primary bg-white text-primary"
+            class="h-10 w-32 border border-primary bg-accent text-accent-foreground"
             preserveAspectRatio="none"
             stroke="currentColor"
             fill="none"
@@ -137,7 +137,19 @@
             <span>Fast Order</span>
           </button>
 
-          <!-- User Dropdown - Desktop Only -->
+          <button
+            type="button"
+            aria-label="Toggle dark mode"
+            data-tooltip="Toggle dark mode"
+            data-side="bottom"
+            onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+            class="btn-icon-outline size-8 ml-2"
+          >
+            <span class="hidden dark:block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg></span>
+            <span class="block dark:hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg></span>
+          </button>
+
+          <!-- User Dropdown -->
           <div id="dropdown-menu-checkboxes" class="dropdown-menu lg:block">
             <button
               type="button"
@@ -425,9 +437,9 @@
       <!-- Column menu container -->
       <div
         id="column-menu-container"
-        class="fixed left-1/2 z-20 mx-auto hidden w-full max-w-5xl -translate-x-1/2 transform overflow-clip rounded-lg bg-white shadow-xl"
+        class="fixed left-1/2 z-20 mx-auto hidden w-full max-w-5xl -translate-x-1/2 transform overflow-clip rounded-lg bg-popover text-popover-foreground shadow-xl"
       >
-        <div class="bg-white-500 container h-full overflow-hidden">
+        <div class="container h-full overflow-hidden">
           <div class="flex items-center border-b p-4">
             <button class="back-to-mobile-menu btn-ghost mr-2 p-1 lg:hidden">
               <svg data-lucide="chevron-left" class="size-6"></svg>
@@ -473,7 +485,7 @@
       <!-- Megamenu -->
       <div
         id="mega-menu-container"
-        class="fixed z-20 mx-auto flex w-auto transform flex-col overflow-hidden rounded-lg bg-white shadow-xl md:left-1/2 md:w-full md:max-w-5xl md:-translate-x-1/2"
+        class="fixed z-20 mx-auto flex w-auto transform flex-col overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-xl md:left-1/2 md:w-full md:max-w-5xl md:-translate-x-1/2"
         hidden
       >
         <div class="flex items-center justify-between border-b p-4">
@@ -488,7 +500,7 @@
           <button
             id="mega-menu-close-button"
             type="button"
-            class="rounded-full p-1 hover:bg-gray-100"
+            class="rounded-full p-1"
             aria-label="Close menu"
           >
             <svg data-lucide="x" role="img" aria-label="Close"></svg>
@@ -500,26 +512,26 @@
             <section class="md:col-span-8">
               <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900">Category</h3>
+                  <h3 class="text-sm font-medium ">Category</h3>
                   <ul class="mt-3 space-y-2">
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
@@ -531,21 +543,21 @@
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
@@ -557,21 +569,21 @@
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
                     <li>
                       <a
                         href="#"
-                        class="block text-sm text-gray-700 hover:text-gray-900"
+                        class="block text-sm"
                         >Link item</a
                       >
                     </li>
@@ -581,9 +593,9 @@
             </section>
 
             <aside class="md:col-span-4">
-              <div class="rounded-lg border bg-gray-50 p-4">
-                <p class="text-sm font-medium text-gray-900">Featured</p>
-                <p class="mt-2 text-sm text-gray-600">
+              <div class="rounded-lg border bg-muted text-muted-foreground p-4">
+                <p class="text-sm font-medium ">Featured</p>
+                <p class="mt-2 text-sm ">
                   Use this area for a promo card, image, newsletter, or CTA.
                 </p>
                 <a
@@ -609,7 +621,7 @@
     <!-- Mobile Drawer -->
     <div
       id="mobile-drawer"
-      class="fixed top-0 left-0 z-50 flex h-full w-4/5 max-w-[300px] -translate-x-full flex-col bg-white shadow-lg transition-transform duration-300 ease-in-out data-[open]:translate-x-0"
+      class="fixed top-0 left-0 z-50 flex h-full w-4/5 max-w-[300px] -translate-x-full flex-col bg-popover text-popover-foreground shadow-lg transition-transform duration-300 ease-in-out data-[open]:translate-x-0"
     >
       <div class="flex items-center justify-between border-b p-4">
         <span class="text-lg font-bold">Menu</span>
@@ -641,7 +653,7 @@
           <!-- Items will be cloned from main menu or generated -->
         </ul>
       </div>
-      <div class="border-t bg-gray-50 p-4">
+      <div class="border-t bg-muted p-4">
         <div class="flex flex-col gap-2">
           <button class="btn-outline w-full justify-center">
             <svg data-lucide="zap" aria-hidden="true"></svg>
@@ -666,7 +678,7 @@
           <p class="text-2xl text-gray-500">Main Content area</p>
           <button
             id="showNotification"
-            class="rounded-md bg-primary px-4 py-2 text-white"
+            class="btn"
           >
             Show Notification
           </button>
@@ -682,7 +694,7 @@
             <div class="flex items-center gap-2 lg:justify-start">
               <a href="#" class="flex items-center gap-2">
                 <svg
-                  class="h-10 w-32 border border-primary bg-white text-primary"
+                  class="h-10 w-32 border border-primary bg-accent text-accent-foreground"
                   preserveAspectRatio="none"
                   stroke="currentColor"
                   fill="none"

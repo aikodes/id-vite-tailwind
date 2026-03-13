@@ -3,6 +3,7 @@ import { menuData } from "./menu-data.js";
 import { initializeMegaMenu } from "./mega-menu.js";
 import { initializeMobileInteractions } from "./mobile-interactions.js";
 import { updateNotificationTextContrast } from "./utils.js";
+import "./theme-switcher.js";
 import "./notifications.js";
 import "basecoat-css/all";
 // import "./toggle-tabs.js";
