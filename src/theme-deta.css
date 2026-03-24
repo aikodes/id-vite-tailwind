@@ -18,22 +18,71 @@
   --accent-foreground: oklch(from var(--brand) 0.15 calc(c * 0.4) h);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
+  --success: oklch(0.6 0.15 145);
+  --success-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.75 0.15 85);
+  --warning-foreground: oklch(0.2 0 0);
+  --info: oklch(0.6 0.15 230);
+  --info-foreground: oklch(0.985 0 0);
   --border: oklch(0.85 0 0);
   --input: oklch(0.85 0 0);
   --ring: oklch(from var(--brand) 0.5 calc(c * 1.2) h);
-  --chart-1: oklch(from var(--brand) 0.6 calc(c * 1.0) h);
+  --chart-1: oklch(from var(--brand) 0.6 calc(c * 1) h);
   --chart-2: oklch(from var(--brand) 0.65 calc(c * 0.7) calc(h + 40));
   --chart-3: oklch(from var(--brand) 0.55 calc(c * 0.5) calc(h + 120));
   --chart-4: oklch(from var(--brand) 0.5 calc(c * 0.4) calc(h + 200));
   --chart-5: oklch(from var(--brand) 0.45 calc(c * 0.3) calc(h + 280));
   --sidebar: oklch(from var(--brand) 0.15 calc(c * 0.15) h);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(from var(--brand) 0.55 calc(c * 1.0) h);
+  --sidebar-primary: oklch(from var(--brand) 0.55 calc(c * 1) h);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(from var(--brand) 0.25 calc(c * 0.2) h);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(from var(--brand) 0.5 calc(c * 1.2) h);
+
+  /* Component Tokens - Deta Theme (Bold Style) */
+  --header: var(--primary);
+  --header-foreground: var(--primary-foreground);
+  --header-border: transparent;
+  --footer: var(--primary);
+  --footer-foreground: var(--primary-foreground);
+  --footer-border: transparent;
+  --nav: transparent;
+  --nav-foreground: var(--primary-foreground);
+  --nav-hover: oklch(from var(--primary) calc(l + 0.05) c h);
+  --nav-active: oklch(from var(--primary) calc(l + 0.1) c h);
+  --nav-active-foreground: var(--primary-foreground);
+  --hero: var(--primary);
+  --hero-foreground: var(--primary-foreground);
+  --section-alt: var(--secondary);
+  --card-feature: var(--card);
+  --card-highlight: var(--accent);
+}
+
+@theme {
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-header-border: var(--header-border);
+  --color-footer: var(--footer);
+  --color-footer-foreground: var(--footer-foreground);
+  --color-footer-border: var(--footer-border);
+  --color-nav: var(--nav);
+  --color-nav-foreground: var(--nav-foreground);
+  --color-nav-hover: var(--nav-hover);
+  --color-nav-active: var(--nav-active);
+  --color-nav-active-foreground: var(--nav-active-foreground);
+  --color-hero: var(--hero);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-section-alt: var(--section-alt);
+  --color-card-feature: var(--card-feature);
+  --color-card-highlight: var(--card-highlight);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
 }
 
 .dark {
@@ -55,10 +104,16 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
+  --success: oklch(0.65 0.15 145);
+  --success-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.75 0.15 85);
+  --warning-foreground: oklch(0.2 0 0);
+  --info: oklch(0.65 0.15 230);
+  --info-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(from var(--brand) 0.5 calc(c * 1.2) h);
-  --chart-1: oklch(from var(--brand) 0.6 calc(c * 1.0) h);
+  --chart-1: oklch(from var(--brand) 0.6 calc(c * 1) h);
   --chart-2: oklch(from var(--brand) 0.55 calc(c * 0.7) calc(h + 40));
   --chart-3: oklch(from var(--brand) 0.65 calc(c * 0.5) calc(h + 120));
   --chart-4: oklch(from var(--brand) 0.7 calc(c * 0.4) calc(h + 200));
@@ -71,4 +126,22 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(from var(--brand) 0.5 calc(c * 1.2) h);
+
+  /* Component Tokens - Dark Mode (Bold Style) */
+  --header: var(--primary);
+  --header-foreground: var(--primary-foreground);
+  --header-border: transparent;
+  --footer: var(--primary);
+  --footer-foreground: var(--primary-foreground);
+  --footer-border: transparent;
+  --nav: transparent;
+  --nav-foreground: var(--primary-foreground);
+  --nav-hover: oklch(from var(--primary) calc(l + 0.05) c h);
+  --nav-active: oklch(from var(--primary) calc(l + 0.1) c h);
+  --nav-active-foreground: var(--primary-foreground);
+  --hero: var(--primary);
+  --hero-foreground: var(--primary-foreground);
+  --section-alt: var(--secondary);
+  --card-feature: var(--card);
+  --card-highlight: var(--accent);
 }

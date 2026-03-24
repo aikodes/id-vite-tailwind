@@ -64,7 +64,7 @@ function initializeMenu(menuData, options = {}) {
     // Only offset on tablets and above
     if (isTabletOrAbove()) {
       columnMenuContainer.style.top = headerHeight + 16 + 'px'; // Add 16px spacing
-      columnMenuContainer.style.bottom = footerHeight + 16 + 'px'; // Add 16px spacing
+      //columnMenuContainer.style.bottom = footerHeight + 16 + 'px'; // Add 16px spacing
     } else {
       // On mobile, use full device height
       columnMenuContainer.style.top = '16px';

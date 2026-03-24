@@ -5,6 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/style.css" rel="stylesheet" />
+    <link
+      id="theme-default"
+      rel="stylesheet"
+      href="/src/theme.css"
+      data-theme-name="default"
+    />
+    <link
+      id="theme-deta"
+      rel="stylesheet"
+      href="/src/theme-deta.css"
+      data-theme-name="deta"
+      disabled
+    />
+    <link
+      id="theme-softpop"
+      rel="stylesheet"
+      href="/src/theme-soft-pop.css"
+      data-theme-name="softpop"
+      disabled
+    />
     <title>ID's Vite + TW</title>
     <style>
       :root {
@@ -60,7 +80,9 @@
       </div>
     </div>
 
-    <header class="relative border-b">
+    <header
+      class="border-header-border bg-header text-header-foreground relative border-b"
+    >
       <!-- Top Utility Bar -->
       <!-- class="grid grid-flow-col md:auto-cols-[1fr_auto]" -->
       <div
@@ -139,51 +161,135 @@
             <span>Fast Order</span>
           </button>
 
-          <button
-            type="button"
-            aria-label="Toggle dark mode"
-            data-tooltip="Toggle dark mode"
-            data-side="bottom"
-            onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
-            class="btn-icon-outline ml-2 size-8"
-          >
-            <span class="hidden dark:block"
-              ><svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+          <div class="flex items-center gap-2">
+            <div class="dropdown-menu" id="theme-dropdown">
+              <button
+                type="button"
+                id="theme-dropdown-trigger"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                class="btn-sm-ghost"
               >
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2" />
-                <path d="M12 20v2" />
-                <path d="m4.93 4.93 1.41 1.41" />
-                <path d="m17.66 17.66 1.41 1.41" />
-                <path d="M2 12h2" />
-                <path d="M20 12h2" />
-                <path d="m6.34 17.66-1.41 1.41" />
-                <path d="m19.07 4.93-1.41 1.41" />
-              </svg>
-            </span>
-            <span class="block dark:hidden"
-              ><svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                Theme
+              </button>
+              <div
+                id="theme-dropdown-popover"
+                data-align="end"
+                data-popover
+                aria-hidden="true"
+                class="min-w-56"
               >
-                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-              </svg>
-            </span>
-          </button>
+                <div
+                  role="menu"
+                  id="theme-dropdown-menu"
+                  aria-labelledby="theme-dropdown-trigger"
+                >
+                  <div role="group" aria-labelledby="theme-radio-group">
+                    <div
+                      role="heading"
+                      id="theme-radio-group"
+                      class="text-xs font-semibold text-muted-foreground"
+                    >
+                      Theme Style
+                    </div>
+                    <div
+                      role="menuitemradio"
+                      data-theme-option="default"
+                      class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted data-[state=checked]:bg-accent data-[state=checked]:text-foreground"
+                    >
+                      <span
+                        aria-hidden="true"
+                        class="relative grid size-3 place-items-center rounded-full border border-muted-foreground/40 data-[state=checked]:border-transparent"
+                      >
+                        <span
+                          class="block size-1.5 rounded-full bg-foreground opacity-0 transition-opacity data-[state=checked]:bg-primary data-[state=checked]:opacity-100"
+                        ></span>
+                      </span>
+                      Default
+                    </div>
+                    <div
+                      role="menuitemradio"
+                      data-theme-option="deta"
+                      class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted data-[state=checked]:bg-accent data-[state=checked]:text-foreground"
+                    >
+                      <span
+                        aria-hidden="true"
+                        class="relative grid size-3 place-items-center rounded-full border border-muted-foreground/40 data-[state=checked]:border-transparent"
+                      >
+                        <span
+                          class="block size-1.5 rounded-full bg-foreground opacity-0 transition-opacity data-[state=checked]:bg-primary data-[state=checked]:opacity-100"
+                        ></span>
+                      </span>
+                      Deta
+                    </div>
+                    <div
+                      role="menuitemradio"
+                      data-theme-option="softpop"
+                      class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted data-[state=checked]:bg-accent data-[state=checked]:text-foreground"
+                    >
+                      <span
+                        aria-hidden="true"
+                        class="relative grid size-3 place-items-center rounded-full border border-muted-foreground/40 data-[state=checked]:border-transparent"
+                      >
+                        <span
+                          class="block size-1.5 rounded-full bg-foreground opacity-0 transition-opacity data-[state=checked]:bg-primary data-[state=checked]:opacity-100"
+                        ></span>
+                      </span>
+                      Soft Pop
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              aria-label="Toggle dark mode"
+              data-tooltip="Toggle dark mode"
+              data-side="bottom"
+              onclick="
+                document.dispatchEvent(new CustomEvent('basecoat:theme'))
+              "
+              class="btn-icon-outline size-8"
+            >
+              <span class="hidden dark:block"
+                ><svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2" />
+                  <path d="M12 20v2" />
+                  <path d="m4.93 4.93 1.41 1.41" />
+                  <path d="m17.66 17.66 1.41 1.41" />
+                  <path d="M2 12h2" />
+                  <path d="M20 12h2" />
+                  <path d="m6.34 17.66-1.41 1.41" />
+                  <path d="m19.07 4.93-1.41 1.41" />
+                </svg>
+              </span>
+              <span class="block dark:hidden"
+                ><svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              </span>
+            </button>
+          </div>
 
           <!-- User Dropdown -->
           <div id="dropdown-menu-checkboxes" class="dropdown-menu lg:block">
@@ -1685,7 +1791,9 @@
       </div>
     </main>
 
-    <footer class="bg-secondary py-8 lg:py-16">
+    <footer
+      class="border-footer-border bg-footer text-footer-foreground border-t py-8 lg:py-16"
+    >
       <div class="container px-4 lg:px-8 air:px-6 2xl:px-0">
         <div class="grid grid-cols-2 gap-8 lg:grid-cols-6">
           <div class="col-span-2 mb-8 lg:mb-0">
